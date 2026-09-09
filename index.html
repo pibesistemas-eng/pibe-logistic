@@ -1004,7 +1004,7 @@
   height: 28px;
 }
 
-/* TABLETS Y DISPOSITIVOS MEDIANOS (<= 992px) */
+/* TABLETS Y DISPOSITIVOS MEDIANOS*/
 @media (max-width: 992px) {
   .nav-container { height: 80px; }
   .logo img { height: 50px; }
@@ -1079,7 +1079,7 @@
   }
 }
 
-/* SMARTPHONES Y PANTALLAS PEQUEÑAS (<= 576px) */
+/* SMARTPHONES Y PANTALLAS PEQUEÑAS */
 @media (max-width: 576px) {
   .container { padding: 0 16px; }
 
@@ -1226,7 +1226,7 @@
         </div>
       </div>
 
-      <div class="about-services-bento">
+      <div class="about-services-bento" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
         <div class="about-pillar-card">
           <div class="about-pillar-icon">
             <i data-lucide="truck" style="width: 26px; height: 26px;"></i>
@@ -1239,8 +1239,16 @@
           <div class="about-pillar-icon">
             <i data-lucide="plane" style="width: 26px; height: 26px;"></i>
           </div>
-          <h4>Carga Aérea Crítica</h4>
-          <p>Modalidades Express y Estándar puerta a puerta para envíos de alta urgencia con costo optimizado.</p>
+          <h4>Carga Aérea Estándar</h4>
+          <p>Envíos aéreos consolidados y programados puerta a puerta con tarifas y tiempos optimizados a tu presupuesto.</p>
+        </div>
+
+        <div class="about-pillar-card">
+          <div class="about-pillar-icon">
+            <i data-lucide="zap" style="width: 26px; height: 26px;"></i>
+          </div>
+          <h4>Carga Aérea Express</h4>
+          <p>Transporte aéreo de alta prioridad y máxima urgencia con abordaje inmediato y monitoreo de vuelo dedicado.</p>
         </div>
 
         <div class="about-pillar-card">
@@ -1903,55 +1911,22 @@
           })
           .on("mouseleave", () => tooltip.style("display", "none"));
 
-        const marcadores = [
-          { coords: [-100.3161, 25.6866], label: "MONTERREY", align: "left", offset: [80, 0] },
-          { coords: [-89.6169, 20.9676], label: "MÉRIDA", align: "right", offset: [0, -40] },
-          { coords: [-98.7333, 20.1011], label: "PACHUCA", align: "left", offset: [60, -20] },
-          { coords: [-103.3494, 20.6597], label: "GUADALAJARA", align: "right", offset: [-110, 0] },
-          { coords: [-103.7240, 19.2452], label: "COLIMA", align: "right", offset: [-80, 0] },
-          { coords: [-101.6840, 21.1218], label: "LEÓN", align: "right", offset: [-70, 60] },
-          { coords: [-101.3563, 20.6782], label: "IRAPUATO", align: "right", offset: [-70, 85] },
-          { coords: [-102.2839, 19.9822], label: "ZAMORA", align: "right", offset: [-70, 110] },
-          { coords: [-99.1686, 19.6097], label: "TULTITLÁN", isMatriz: true, align: "left", offset: [70, 30] },
-          { coords: [-99.6557, 19.2826], label: "TOLUCA", align: "left", offset: [70, 55] }
-        ];
-
         marcadores.forEach(m => {
           const [x, y] = projection(m.coords);
-          const textX = x + m.offset[0];
-          const textY = y + m.offset[1];
 
-          labelsGroup.append("line")
-            .attr("x1", x)
-            .attr("y1", y)
-            .attr("x2", textX)
-            .attr("y2", textY)
-            .attr("class", "label-line-bee");
-
+          // Círculo exterior blanco del pin
           labelsGroup.append("circle")
             .attr("cx", x)
             .attr("cy", y)
             .attr("r", 6)
             .attr("class", "map-pin");
 
+          // Círculo interior verde del pin
           labelsGroup.append("circle")
             .attr("cx", x)
             .attr("cy", y)
             .attr("r", 2.5)
             .attr("class", "map-pin-inner");
-
-          const textElem = labelsGroup.append("text")
-            .attr("x", textX + (m.align === "left" ? 5 : -5))
-            .attr("y", textY + 4)
-            .attr("text-anchor", m.align === "left" ? "start" : "end")
-            .attr("class", "label-text")
-            .text(m.label);
-
-          if (m.isMatriz) {
-            textElem.append("tspan")
-              .attr("class", "label-highlight")
-              .text(" (Matriz)");
-          }
         });
       });
     });
