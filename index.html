@@ -368,6 +368,26 @@
       .map-wrapper { height: 350px; }
       .map-legend { flex-wrap: wrap; border-radius: 12px; }
     }
+	
+	/* Grilla de 3 arriba y 3 abajo */
+.about-services-bento.grid-3x2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* Adaptación responsiva para tablets y celulares */
+@media (max-width: 992px) {
+  .about-services-bento.grid-3x2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .about-services-bento.grid-3x2 {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 <body>
@@ -440,84 +460,95 @@
     </div>
   </section>
 
-  <section class="about-section reveal" id="propuesta-de-valor">
-    <div class="container">
-      <div class="section-title">
-        <span class="sub-tag">SOLUCIONES A TU MEDIDA</span>
-        <h2>¿Qué resolvemos por ti?</h2>
+<section class="about-section reveal" id="propuesta-de-valor">
+  <div class="container">
+    <div class="section-title">
+      <span class="sub-tag">SOLUCIONES A TU MEDIDA</span>
+      <h2>¿Qué resolvemos por ti?</h2>
+    </div>
+
+    <div class="about-bento-grid">
+      <div class="about-card-hero">
+        <h3 class="about-hero-title">
+          Movemos la carga que <span>otros no pueden</span> y llegamos donde otros no llegan.
+        </h3>
+        <p class="about-lead-text">
+          Donde las paqueterías tradicionales declaran «sin cobertura», nosotros <strong>diseñamos la ruta</strong>. Te ofrecemos control total de punta a punta con <strong>operación 100% propia</strong>, sin intermediarios, eliminando retrasos y garantizando máxima seguridad desde la recolección hasta la última milla.
+        </p>
       </div>
 
-      <div class="about-bento-grid">
-        <div class="about-card-hero">
-          <h3 class="about-hero-title">
-            Movemos la carga que <span>otros no pueden</span> y llegamos donde otros no llegan.
-          </h3>
-          <p class="about-lead-text">
-            Donde las paqueterías tradicionales declaran «sin cobertura», nosotros <strong>diseñamos la ruta</strong>. Te ofrecemos control total de punta a punta con <strong>operación 100% propia</strong>, sin intermediarios, eliminando retrasos y garantizando máxima seguridad desde la recolección hasta la última milla.
-          </p>
+      <div class="about-card-stats">
+        <div class="about-stat-item">
+          <div class="about-stat-number">32</div>
+          <div class="about-stat-label">Estados con Operación Propia</div>
         </div>
-
-        <div class="about-card-stats">
-          <div class="about-stat-item">
-            <div class="about-stat-number">32</div>
-            <div class="about-stat-label">Estados con Operación Propia</div>
-          </div>
-          <div class="about-stat-item">
-            <div class="about-stat-number">100%</div>
-            <div class="about-stat-label">Flota Monitoreada en Tiempo Real</div>
-          </div>
-          <div class="about-stat-item">
-            <div class="about-stat-number">1.5t-53ft</div>
-            <div class="about-stat-label">Capacidad de Flota Adaptable</div>
-          </div>
+        <div class="about-stat-item">
+          <div class="about-stat-number">100%</div>
+          <div class="about-stat-label">Flota Monitoreada en Tiempo Real</div>
         </div>
-      </div>
-
-      <div class="about-services-bento" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-        <div class="about-pillar-card">
-          <div class="about-pillar-icon"><i data-lucide="truck" style="width: 26px; height: 26px;"></i></div>
-          <h4>Transporte Terrestre (FTL)</h4>
-          <p>Carga completa local y foránea extendida en unidades desde 1.5t hasta tráiler de 53ft, ajustadas a tus necesidades.</p>
+        <div class="about-stat-item">
+          <div class="about-stat-number">1.5t-53ft</div>
+          <div class="about-stat-label">Capacidad de Flota Adaptable</div>
         </div>
-
-        <div class="about-pillar-card">
-          <div class="about-pillar-icon"><i data-lucide="plane" style="width: 26px; height: 26px;"></i></div>
-          <h4>Carga Aérea Estándar</h4>
-          <p>Envíos aéreos consolidados y programados puerta a puerta con tarifas y tiempos optimizados a tu presupuesto.</p>
-        </div>
-
-        <div class="about-pillar-card">
-          <div class="about-pillar-icon"><i data-lucide="zap" style="width: 26px; height: 26px;"></i></div>
-          <h4>Carga Aérea Express</h4>
-          <p>Transporte aéreo de alta prioridad y máxima urgencia con abordaje inmediato y monitoreo de vuelo dedicado.</p>
-        </div>
-
-        <div class="about-pillar-card">
-          <div class="about-pillar-icon"><i data-lucide="map-pin" style="width: 26px; height: 26px;"></i></div>
-          <h4>Última Milla Especializada</h4>
-          <p>Esquemas B2B, B2C y Retail con personal certificado, evidencia digital e historial de entregas.</p>
-        </div>
-		
-		
-		
-        <div class="about-pillar-card">
-          <div class="about-pillar-icon"><i data-lucide="shield-check" style="width: 26px; height: 26px;"></i></div>
-          <h4>Seguridad Integrada</h4>
-          <p>Unidades blindadas, GPS en tiempo real, antijammers, cámaras y chapas electromagnéticas estándar.</p>
-        </div>
-      </div>
-
-      <div class="about-banner-footer">
-        <div class="about-banner-text">
-          <i data-lucide="check-circle-2" style="width: 28px; height: 28px;"></i>
-          <span>Cuéntanos tu operación y diseñamos la estrategia logística a la medida de tu negocio.</span>
-        </div>
-        <a href="#contacto" class="btn-emerald-light" style="box-shadow: none; padding: 12px 24px;">
-          <i data-lucide="arrow-right" style="width: 18px;"></i> Diseñar Mi Ruta
-        </a>
       </div>
     </div>
-  </section>
+
+    <!-- Fila 1 (Arriba): 3 Tarjetas | Fila 2 (Abajo): 3 Tarjetas -->
+    <div class="about-services-bento grid-3x2">
+      <!-- 1. Transporte Terrestre -->
+      <div class="about-pillar-card">
+        <div class="about-pillar-icon"><i data-lucide="truck" style="width: 26px; height: 26px;"></i></div>
+        <h4>Transporte Terrestre (FTL)</h4>
+        <p>Carga completa local y foránea extendida en unidades desde 1.5t hasta tráiler de 53ft, ajustadas a tus necesidades.</p>
+      </div>
+
+      <!-- 2. Carga Aérea -->
+      <div class="about-pillar-card">
+        <div class="about-pillar-icon"><i data-lucide="plane" style="width: 26px; height: 26px;"></i></div>
+        <h4>Carga Aérea (Estándar y Express)</h4>
+        <p>Envíos consolidados o de alta prioridad con abordaje inmediato y monitoreo de vuelo dedicado.</p>
+      </div>
+
+      <!-- 3. Última Milla -->
+      <div class="about-pillar-card">
+        <div class="about-pillar-icon"><i data-lucide="map-pin" style="width: 26px; height: 26px;"></i></div>
+        <h4>Última Milla Especializada</h4>
+        <p>Esquemas B2B, B2C y Retail con personal certificado, evidencia digital e historial de entregas.</p>
+      </div>
+
+      <!-- 4. Logística Virtual -->
+      <div class="about-pillar-card">
+        <div class="about-pillar-icon"><i data-lucide="laptop" style="width: 26px; height: 26px;"></i></div>
+        <h4>Logística Virtual Integrada</h4>
+        <p>Diseñamos e implementamos tu infraestructura logística 100% digital, dándote visibilidad y control total.</p>
+      </div>
+
+      <!-- 5. Entregas en Moto -->
+      <div class="about-pillar-card">
+        <div class="about-pillar-icon"><i data-lucide="bike" style="width: 26px; height: 26px;"></i></div>
+        <h4>Entregas Express en Moto</h4>
+        <p>Flotilla de motocicletas para mensajería ultrarrápida, trámite de documentos y paquetería ligera.</p>
+      </div>
+
+      <!-- 6. Seguridad Integrada -->
+      <div class="about-pillar-card">
+        <div class="about-pillar-icon"><i data-lucide="shield-check" style="width: 26px; height: 26px;"></i></div>
+        <h4>Seguridad Integrada</h4>
+        <p>Unidades blindadas, GPS en tiempo real, antijammers, cámaras y chapas electromagnéticas estándar.</p>
+      </div>
+    </div>
+
+    <div class="about-banner-footer">
+      <div class="about-banner-text">
+        <i data-lucide="check-circle-2" style="width: 28px; height: 28px;"></i>
+        <span>Cuéntanos tu operación y diseñamos la estrategia logística a la medida de tu negocio.</span>
+      </div>
+      <a href="#contacto" class="btn-emerald-light" style="box-shadow: none; padding: 12px 24px;">
+        <i data-lucide="arrow-right" style="width: 18px;"></i> Diseñar Mi Ruta
+      </a>
+    </div>
+  </div>
+</section>
 
   <section class="mv-section reveal" id="mision-vision">
     <div class="container">
