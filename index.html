@@ -369,23 +369,35 @@
       .map-legend { flex-wrap: wrap; border-radius: 12px; }
     }
 	
-	/* Grilla de 3 arriba y 3 abajo */
-.about-services-bento.grid-3x2 {
+	/* Layout para 7 Tarjetas Bento */
+.about-services-bento.grid-7-items {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
-/* Adaptación responsiva para tablets y celulares */
+/* La tarjeta 7 ocupa las 3 columnas para cerrar simétricamente */
+.about-services-bento.grid-7-items .card-full-width {
+  grid-column: span 3;
+}
+
+/* Adaptabilidad para pantallas medianas (Tablets) */
 @media (max-width: 992px) {
-  .about-services-bento.grid-3x2 {
+  .about-services-bento.grid-7-items {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .about-services-bento.grid-7-items .card-full-width {
+    grid-column: span 2;
   }
 }
 
+/* Adaptabilidad para teléfonos */
 @media (max-width: 600px) {
-  .about-services-bento.grid-3x2 {
+  .about-services-bento.grid-7-items {
     grid-template-columns: 1fr;
+  }
+  .about-services-bento.grid-7-items .card-full-width {
+    grid-column: span 1;
   }
 }
   </style>
@@ -493,8 +505,8 @@
       </div>
     </div>
 
-    <!-- Fila 1 (Arriba): 3 Tarjetas | Fila 2 (Abajo): 3 Tarjetas -->
-    <div class="about-services-bento grid-3x2">
+    <!-- Grilla Bento de 7 Tarjetas -->
+    <div class="about-services-bento grid-7-items">
       <!-- 1. Transporte Terrestre -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="truck" style="width: 26px; height: 26px;"></i></div>
@@ -502,39 +514,46 @@
         <p>Carga completa local y foránea extendida en unidades desde 1.5t hasta tráiler de 53ft, ajustadas a tus necesidades.</p>
       </div>
 
-      <!-- 2. Carga Aérea -->
+      <!-- 2. Carga Aérea Estándar -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="plane" style="width: 26px; height: 26px;"></i></div>
-        <h4>Carga Aérea (Estándar y Express)</h4>
-        <p>Envíos consolidados o de alta prioridad con abordaje inmediato y monitoreo de vuelo dedicado.</p>
+        <h4>Carga Aérea Estándar</h4>
+        <p>Envíos aéreos consolidados y programados puerta a puerta con tarifas y tiempos optimizados a tu presupuesto.</p>
       </div>
 
-      <!-- 3. Última Milla -->
+      <!-- 3. Carga Aérea Express -->
+      <div class="about-pillar-card">
+        <div class="about-pillar-icon"><i data-lucide="zap" style="width: 26px; height: 26px;"></i></div>
+        <h4>Carga Aérea Express</h4>
+        <p>Transporte aéreo de alta prioridad y máxima urgencia con abordaje inmediato y monitoreo de vuelo dedicado.</p>
+      </div>
+
+      <!-- 4. Última Milla -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="map-pin" style="width: 26px; height: 26px;"></i></div>
         <h4>Última Milla Especializada</h4>
         <p>Esquemas B2B, B2C y Retail con personal certificado, evidencia digital e historial de entregas.</p>
       </div>
 
-      <!-- 4. Logística Virtual -->
+      <!-- 5. Logística Virtual -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="laptop" style="width: 26px; height: 26px;"></i></div>
         <h4>Logística Virtual Integrada</h4>
-        <p>Diseñamos e implementamos tu infraestructura logística 100% digital, dándote visibilidad y control total.</p>
+        <p>Diseñamos e implementamos tu infraestructura logística 100% digital, dándote visibilidad y control total de tu operación.</p>
       </div>
 
-      <!-- 5. Entregas en Moto -->
+      <!-- 6. Entregas en Moto -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="bike" style="width: 26px; height: 26px;"></i></div>
         <h4>Entregas Express en Moto</h4>
-        <p>Flotilla de motocicletas para mensajería ultrarrápida, trámite de documentos y paquetería ligera.</p>
+        <p>Flotilla de motocicletas para mensajería ultrarrápida, trámite de documentos y paquetería ligera en tiempos récord.</p>
       </div>
 
-      <!-- 6. Seguridad Integrada -->
-      <div class="about-pillar-card">
+      <!-- 7. Seguridad Integrada -->
+      <div class="about-pillar-card card-full-width">
         <div class="about-pillar-icon"><i data-lucide="shield-check" style="width: 26px; height: 26px;"></i></div>
         <h4>Seguridad Integrada</h4>
-        <p>Unidades blindadas, GPS en tiempo real, antijammers, cámaras y chapas electromagnéticas estándar.</p>
+        <p>Unidades blindadas, GPS en tiempo real, antijammers, cámaras y chapas electromagnéticas estándar en cada ruta.</p>
       </div>
     </div>
 
