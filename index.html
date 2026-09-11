@@ -365,7 +365,23 @@
       .infra-grid, .services-grid { grid-template-columns: 1fr; }
       .quote-card-standalone { padding: 28px 18px; }
 
-      .map-wrapper { height: 350px; }
+      /* Ajusta el contenedor del mapa para que sea flexible */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 580px; /* Altura base para escritorio */
+  background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  border: 1px solid var(--slate-border);
+  overflow: hidden;
+}
+
+/* En dispositivos móviles reducimos la altura del contenedor para mantener mejor proporción */
+@media (max-width: 576px) {
+  .map-wrapper {
+    height: 380px;
+  }
+}
       .map-legend { flex-wrap: wrap; border-radius: 12px; }
     }
 	
@@ -400,6 +416,8 @@
     grid-column: span 1;
   }
 }
+
+
   </style>
 </head>
 <body>
@@ -430,47 +448,50 @@
   </header>
 
   <section class="hero reveal" id="inicio">
-    <canvas id="hero-canvas"></canvas>
-    <div class="container">
-      <div class="hero-main-grid">
-        <div class="hero-text">
-          <span class="badge"><i data-lucide="shield-check" style="width: 16px;"></i> Certificados por Dun & Bradstreet</span>
-          <h1>Llevando tu Logística al Siguiente Nivel</h1>
-          <p>Operador logístico especializado en Última Milla, Paquetería Retail y Almacenamiento AAA en Tultitlán con monitoreo GPS en tiempo real.</p>
-        </div>
-
-        <div class="hero-carousel">
-          <a href="#quienes-somos" class="carousel-slide" style="background-image: url('img/Banner.gif');">
-            <div class="carousel-caption"><i data-lucide="welcome"></i> Bienvenido a Pibe Logistic — Conócenos</div>
-          </a>
-          <a href="#infraestructura" class="carousel-slide active" style="background-image: url('img/Mapa.gif');">
-            <div class="carousel-caption"><i data-lucide="warehouse"></i> Instalaciones CEDIS Tultipark II — Ver Detalles</div>
-          </a>
-          <a href="#servicios" class="carousel-slide" style="background-image: url('empresa-2.jpg');">
-            <div class="carousel-caption"><i data-lucide="truck"></i> Flotilla y Unidades con Monitoreo GPS — Ver Cobertura</div>
-          </a>
-          <a href="#servicios" class="carousel-slide" style="background-image: url('empresa-3.jpg');">
-            <div class="carousel-caption"><i data-lucide="boxes"></i> Operación y Control Automatizado — Ver Servicios</div>
-          </a>
-          
-          <div class="carousel-dots">
-            <div class="dot active"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-          </div>
-        </div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="container">
+    <div class="hero-main-grid">
+      <div class="hero-text">
+        <span class="badge"><i data-lucide="shield-check" style="width: 16px;"></i> Certificados por Dun & Bradstreet</span>
+        <h1>Llevando tu Logística al Siguiente Nivel</h1>
+        <p>Operador logístico especializado en Última Milla, Paquetería Retail y Almacenamiento AAA en Tultitlán con monitoreo GPS en tiempo real.</p>
       </div>
 
-      <div class="tracking-box-wide">
-        <label for="track-input"><i data-lucide="search" style="width: 20px;"></i> Rastrear Envío en Tiempo Real:</label>
-        <div class="input-inline-wide">
-          <input type="text" id="track-input" placeholder="Ingresa tu número de guía o código de seguimiento...">
-          <button class="btn-emerald-light"><i data-lucide="navigation" style="width: 18px;"></i> Buscar Envío</button>
+      <div class="hero-carousel">
+        <a href="#quienes-somos" class="carousel-slide active" style="background-image: url('img/Banner.gif');">
+          <div class="carousel-caption"><i data-lucide="welcome"></i> Bienvenido a Pibe Logistic — Conócenos</div>
+        </a>
+
+        <a href="#cobertura" class="carousel-slide" style="background-image: url('img/Mapa.gif');">
+          <div class="carousel-caption"><i data-lucide="map-pin"></i> Red Logística e Infraestructura Propia — Ver Cobertura</div>
+        </a>
+
+        <a href="#servicios" class="carousel-slide" style="background-image: url('empresa-2.jpg');">
+          <div class="carousel-caption"><i data-lucide="truck"></i> Flotilla y Unidades con Monitoreo GPS — Ver Cobertura</div>
+        </a>
+
+        <a href="#servicios" class="carousel-slide" style="background-image: url('empresa-3.jpg');">
+          <div class="carousel-caption"><i data-lucide="boxes"></i> Operación y Control Automatizado — Ver Servicios</div>
+        </a>
+        
+        <div class="carousel-dots">
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
         </div>
       </div>
     </div>
-  </section>
+
+    <div class="tracking-box-wide">
+      <label for="track-input"><i data-lucide="search" style="width: 20px;"></i> Rastrear Envío en Tiempo Real:</label>
+      <div class="input-inline-wide">
+        <input type="text" id="track-input" placeholder="Ingresa tu número de guía o código de seguimiento...">
+        <button class="btn-emerald-light"><i data-lucide="navigation" style="width: 18px;"></i> Buscar Envío</button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="about-section reveal" id="propuesta-de-valor">
   <div class="container">
@@ -847,46 +868,14 @@
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
           </a>
           <a href="https://mx.indeed.com/cmp/Pibe-Logistic" target="_blank" rel="noopener noreferrer" title="Indeed">
-            <span class="badge-job">ind</span>
+            <span class="badge-job">in</span>
           </a>
           <a href="https://occ.com.mx" target="_blank" rel="noopener noreferrer" title="OCC Mundial">
             <span class="badge-job">occ</span>
           </a>
         </div>
       </div>
-     
-      <div class="footer-col">
-        <h4>Mapa del Sitio</h4>
-        <ul>
-          <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#quienes-somos">Quiénes Somos</a></li>
-          <li><a href="#mision-vision">Misión y Visión</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-          <li><a href="#video">Video</a></li>
-          <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#infraestructura">Infraestructura</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Servicios Logísticos</h4>
-        <div class="footer-services-list">
-          <ul>
-            <li><a href="#servicios">Express Aéreo</a></li>
-            <li><a href="#servicios">Carga Consolidada</a></li>
-            <li><a href="#servicios">Paquetería Tipo Retail</a></li>
-            <li><a href="#servicios">Mensajería Especializada</a></li>
-          </ul>
-          <ul>
-            <li><a href="#servicios">Transporte Dedicado</a></li>
-            <li><a href="#servicios">Logística Inversa</a></li>
-            <li><a href="#servicios">Maquila de Productos</a></li>
-            <li><a href="#servicios">Sistemas y APK</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
+     </div>
     <div class="footer-bottom">
       <div class="container">
         <p>© 2026 PIBE LOGISTIC. Todos los derechos reservados. | <a href="#">Aviso de Privacidad</a></p>
@@ -1101,78 +1090,100 @@
       });
     });
 
-    // D3 Map
-    const oficinasPorNombre = {
-      "Nuevo León": "Monterrey",
-      "Jalisco": "Guadalajara",
-      "Colima": "Colima",
-      "Michoacán": "Zamora",
-      "Michoacán de Ocampo": "Zamora",
-      "Guanajuato": "León e Irapuato",
-      "Hidalgo": "Pachuca",
-      "México": "Tultitlán (Matriz) y Toluca",
-      "Estado de México": "Tultitlán (Matriz) y Toluca",
-      "Yucatán": "Mérida"
-    };
+    // D3 Map Responsivo
+const oficinasPorNombre = {
+  "Nuevo León": "Monterrey",
+  "Jalisco": "Guadalajara",
+  "Colima": "Colima",
+  "Michoacán": "Zamora",
+  "Michoacán de Ocampo": "Zamora",
+  "Guanajuato": "León e Irapuato",
+  "Hidalgo": "Pachuca",
+  "México": "Tultitlán (Matriz) y Toluca",
+  "Estado de México": "Tultitlán (Matriz) y Toluca",
+  "Yucatán": "Mérida"
+};
 
-    function normalizarTexto(texto) {
-      if (!texto) return "";
-      return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-    }
+function normalizarTexto(texto) {
+  if (!texto) return "";
+  return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+}
 
-    const oficinasNormalizadas = {};
-    Object.keys(oficinasPorNombre).forEach(key => {
-      oficinasNormalizadas[normalizarTexto(key)] = oficinasPorNombre[key];
-    });
+const oficinasNormalizadas = {};
+Object.keys(oficinasPorNombre).forEach(key => {
+  oficinasNormalizadas[normalizarTexto(key)] = oficinasPorNombre[key];
+});
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const container = d3.select("#mexico-map");
-      const width = container.node().getBoundingClientRect().width;
-      const height = 580;
+window.addEventListener('DOMContentLoaded', () => {
+  const container = d3.select("#mexico-map");
+  const wrapperNode = d3.select("#map-wrapper").node();
+  const tooltip = d3.select("#tooltip");
 
-      const svg = container.append("svg")
-        .attr("width", "100%")
-        .attr("height", height)
-        .attr("viewBox", `0 0 ${width} ${height}`);
+  const svg = container.append("svg")
+    .attr("width", "100%")
+    .attr("height", "100%");
 
-      const mapGroup = svg.append("g");
-      const tooltip = d3.select("#tooltip");
+  const mapGroup = svg.append("g");
 
-      const geoJsonData = "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/mexico.geojson";
+  let globalGeoData = null;
 
-      d3.json(geoJsonData).then(data => {
-        const projection = d3.geoMercator().fitSize([width, height], data);
-        const path = d3.geoPath().projection(projection);
+  // Función encargada de dibujar/redibujar el mapa según las dimensiones actuales del contenedor
+  function renderMap() {
+    if (!globalGeoData) return;
 
-        mapGroup.selectAll("path")
-          .data(data.features)
-          .enter()
-          .append("path")
-          .attr("d", path)
-          .attr("class", d => {
-            const name = d.properties.name || d.properties.state_name || "";
-            return oficinasNormalizadas[normalizarTexto(name)] ? "state state-office" : "state state-red";
-          })
-          .on("mousemove", (event, d) => {
-            const name = d.properties.name || d.properties.state_name || "Estado";
-            const oficina = oficinasNormalizadas[normalizarTexto(name)];
+    const width = wrapperNode.clientWidth;
+    const height = wrapperNode.clientHeight;
 
-            let content = `<strong>${name}</strong>`;
-            if (oficina) {
-              content += `<br/><span style="font-weight:normal; font-size:11px;">🏢 Oficina: ${oficina}</span>`;
-            } else {
-              content += `<br/><span style="font-weight:normal; font-size:11px;">🚚 Cobertura Operativa</span>`;
-            }
+    svg.attr("viewBox", `0 0 ${width} ${height}`);
 
-            const rect = d3.select("#map-wrapper").node().getBoundingClientRect();
-            tooltip.html(content)
-              .style("display", "block")
-              .style("left", (event.clientX - rect.left + 15) + "px")
-              .style("top", (event.clientY - rect.top - 15) + "px");
-          })
-          .on("mouseleave", () => tooltip.style("display", "none"));
-      });
-    });
+    // La proyección D3 ajusta automáticamente el mapa al ancho y alto dinámicos del contenedor
+    const projection = d3.geoMercator().fitSize([width, height], globalGeoData);
+    const path = d3.geoPath().projection(projection);
+
+    // Selección de elementos
+    const paths = mapGroup.selectAll("path").data(globalGeoData.features);
+
+    // Actualización / Creación de estados
+    paths.enter()
+      .append("path")
+      .merge(paths)
+      .attr("d", path)
+      .attr("class", d => {
+        const name = d.properties.name || d.properties.state_name || "";
+        return oficinasNormalizadas[normalizarTexto(name)] ? "state state-office" : "state state-red";
+      })
+      .on("mousemove", (event, d) => {
+        const name = d.properties.name || d.properties.state_name || "Estado";
+        const oficina = oficinasNormalizadas[normalizarTexto(name)];
+
+        let content = `<strong>${name}</strong>`;
+        if (oficina) {
+          content += `<br/><span style="font-weight:normal; font-size:11px;">🏢 Oficina: ${oficina}</span>`;
+        } else {
+          content += `<br/><span style="font-weight:normal; font-size:11px;">🚚 Cobertura Operativa</span>`;
+        }
+
+        const rect = wrapperNode.getBoundingClientRect();
+        tooltip.html(content)
+          .style("display", "block")
+          .style("left", (event.clientX - rect.left + 15) + "px")
+          .style("top", (event.clientY - rect.top - 15) + "px");
+      })
+      .on("mouseleave", () => tooltip.style("display", "none"));
+
+    paths.exit().remove();
+  }
+
+  // Cargar datos GeoJSON una sola vez
+  const geoJsonData = "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/mexico.geojson";
+  d3.json(geoJsonData).then(data => {
+    globalGeoData = data;
+    renderMap();
+  });
+
+  // Re-renderizar dinámicamente si cambia el tamaño de la pantalla o la orientación del móvil
+  window.addEventListener('resize', renderMap);
+});
 
     // Reveal Animation
     const reveals = document.querySelectorAll('.reveal');
