@@ -105,19 +105,12 @@
     .dot.active { background: var(--white); width: 26px; border-radius: 10px; }
 
 	.tracking-box-wide { 
-	  /* Fondo verde con 12% de opacidad */
 	  background: rgba(0, 104, 55, 0.12); 
-	  
-	  /* Efecto de desenfoque de fondo */
 	  backdrop-filter: blur(16px); 
 	  -webkit-backdrop-filter: blur(16px);
-	  
 	  padding: 28px 36px; 
 	  border-radius: var(--radius-lg); 
-	  
-	  /* Borde sutil verde semitransparente para dar definición */
 	  border: 1px solid rgba(0, 104, 55, 0.25); 
-	  
 	  box-shadow: var(--shadow-md); 
 	  width: 100%; 
 	}
@@ -159,6 +152,66 @@
     .about-banner-footer { background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%); border-radius: var(--radius-md); padding: 28px 40px; color: var(--white); display: flex; align-items: center; justify-content: space-between; gap: 20px; box-shadow: 0 10px 30px rgba(0, 104, 55, 0.25); }
     .about-banner-text { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 14px; }
     .about-banner-text i { color: #34d399; flex-shrink: 0; }
+
+    /* =========================================================
+       NUEVA SECCIÓN: CARRUSEL DE SOCIOS
+       ========================================================= */
+    .partners-section {
+      padding: 60px 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--slate-border);
+      overflow: hidden;
+    }
+    
+    .partners-carousel-track {
+      display: flex;
+      width: max-content;
+      animation: partnersScroll 25s linear infinite;
+    }
+
+    .partners-carousel-track:hover {
+      animation-play-state: paused;
+    }
+
+    .partner-card {
+      flex: 0 0 220px;
+      height: 100px;
+      margin: 0 16px;
+      background: var(--white);
+      border: 1px solid var(--slate-border);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-smooth);
+    }
+
+    .partner-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .partner-card img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: grayscale(100%);
+      opacity: 0.7;
+      transition: var(--transition-smooth);
+    }
+
+    .partner-card:hover img {
+      filter: grayscale(0%);
+      opacity: 1;
+    }
+
+    @keyframes partnersScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
 
     /* Misión y Visión */
     .mv-section { padding: 100px 0; background: radial-gradient(circle at 50% 30%, #1a2921 0%, #0d1410 100%); position: relative; overflow: hidden; color: var(--white); }
@@ -283,9 +336,7 @@
     .header-socials a:hover { background: #006837; color: #ffffff; border-color: #34d399; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(52, 211, 153, 0.3); }
     .header-socials .badge-job { font-size: 0.7rem; letter-spacing: -0.02em; padding: 0 4px; }
 
-    /* =========================================================
-       RESPONSIVE DESIGN (MÓVIL Y TABLET)
-       ========================================================= */
+    /* RESPONSIVE DESIGN */
     .mobile-menu-toggle {
       display: none;
       background: transparent;
@@ -365,59 +416,39 @@
       .infra-grid, .services-grid { grid-template-columns: 1fr; }
       .quote-card-standalone { padding: 28px 18px; }
 
-      /* Ajusta el contenedor del mapa para que sea flexible */
-.map-wrapper {
-  position: relative;
-  width: 100%;
-  height: 580px; /* Altura base para escritorio */
-  background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f8fafc 100%);
-  border-radius: 20px;
-  border: 1px solid var(--slate-border);
-  overflow: hidden;
-}
-
-/* En dispositivos móviles reducimos la altura del contenedor para mantener mejor proporción */
-@media (max-width: 576px) {
-  .map-wrapper {
-    height: 380px;
-  }
-}
+      .map-wrapper {
+        height: 380px;
+      }
       .map-legend { flex-wrap: wrap; border-radius: 12px; }
     }
 	
-	/* Layout para 7 Tarjetas Bento */
-.about-services-bento.grid-7-items {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
+	.about-services-bento.grid-7-items {
+	  display: grid;
+	  grid-template-columns: repeat(3, 1fr);
+	  gap: 1.5rem;
+	}
 
-/* La tarjeta 7 ocupa las 3 columnas para cerrar simétricamente */
-.about-services-bento.grid-7-items .card-full-width {
-  grid-column: span 3;
-}
+	.about-services-bento.grid-7-items .card-full-width {
+	  grid-column: span 3;
+	}
 
-/* Adaptabilidad para pantallas medianas (Tablets) */
-@media (max-width: 992px) {
-  .about-services-bento.grid-7-items {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .about-services-bento.grid-7-items .card-full-width {
-    grid-column: span 2;
-  }
-}
+	@media (max-width: 992px) {
+	  .about-services-bento.grid-7-items {
+		grid-template-columns: repeat(2, 1fr);
+	  }
+	  .about-services-bento.grid-7-items .card-full-width {
+		grid-column: span 2;
+	  }
+	}
 
-/* Adaptabilidad para teléfonos */
-@media (max-width: 600px) {
-  .about-services-bento.grid-7-items {
-    grid-template-columns: 1fr;
-  }
-  .about-services-bento.grid-7-items .card-full-width {
-    grid-column: span 1;
-  }
-}
-
-
+	@media (max-width: 600px) {
+	  .about-services-bento.grid-7-items {
+		grid-template-columns: 1fr;
+	  }
+	  .about-services-bento.grid-7-items .card-full-width {
+		grid-column: span 1;
+	  }
+	}
   </style>
 </head>
 <body>
@@ -434,6 +465,7 @@
 
       <nav class="nav-menu">
         <a href="#propuesta-de-valor">Soluciones a tu Medida</a>
+        <a href="#socios">Socios</a>
         <a href="#mision-vision">Misión y Visión</a>
         <a href="#video">Conócenos</a>
         <a href="#cobertura">Cobertura</a>
@@ -528,50 +560,37 @@
 
     <!-- Grilla Bento de 7 Tarjetas -->
     <div class="about-services-bento grid-7-items">
-      <!-- 1. Transporte Terrestre -->
-      <div class="about-pillar-card">
-        <div class="about-pillar-icon"><i data-lucide="truck" style="width: 26px; height: 26px;"></i></div>
-        <h4>Transporte Terrestre (FTL)</h4>
-        <p>Carga completa local y foránea extendida en unidades desde 1.5t hasta tráiler de 53ft, ajustadas a tus necesidades.</p>
-      </div>
-
-      <!-- 2. Carga Aérea Estándar -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="plane" style="width: 26px; height: 26px;"></i></div>
         <h4>Carga Aérea Estándar</h4>
         <p>Envíos aéreos consolidados y programados puerta a puerta con tarifas y tiempos optimizados a tu presupuesto.</p>
       </div>
 
-      <!-- 3. Carga Aérea Express -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="zap" style="width: 26px; height: 26px;"></i></div>
         <h4>Carga Aérea Express</h4>
         <p>Transporte aéreo de alta prioridad y máxima urgencia con abordaje inmediato y monitoreo de vuelo dedicado.</p>
       </div>
 
-      <!-- 4. Última Milla -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="map-pin" style="width: 26px; height: 26px;"></i></div>
         <h4>Última Milla Especializada</h4>
         <p>Esquemas B2B, B2C y Retail con personal certificado, evidencia digital e historial de entregas.</p>
       </div>
 
-      <!-- 5. Logística Virtual -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="laptop" style="width: 26px; height: 26px;"></i></div>
         <h4>Logística Virtual Integrada</h4>
         <p>Diseñamos e implementamos tu infraestructura logística 100% digital, dándote visibilidad y control total de tu operación.</p>
       </div>
 
-      <!-- 6. Entregas en Moto -->
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="bike" style="width: 26px; height: 26px;"></i></div>
         <h4>Entregas Express en Moto</h4>
         <p>Flotilla de motocicletas para mensajería ultrarrápida, trámite de documentos y paquetería ligera en tiempos récord.</p>
       </div>
 
-      <!-- 7. Seguridad Integrada -->
-      <div class="about-pillar-card card-full-width">
+      <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="shield-check" style="width: 26px; height: 26px;"></i></div>
         <h4>Seguridad Integrada</h4>
         <p>Unidades blindadas, GPS en tiempo real, antijammers, cámaras y chapas electromagnéticas estándar en cada ruta.</p>
@@ -589,6 +608,38 @@
     </div>
   </div>
 </section>
+
+  <!-- =========================================================
+       NUEVA SECCIÓN: CARRUSEL DE NUESTROS SOCIOS
+       ========================================================= -->
+  <section class="partners-section reveal" id="socios">
+    <div class="container">
+      <div class="section-title" style="margin-bottom: 30px;">
+        <span class="sub-tag">ALIANZAS ESTRATÉGICAS</span>
+        <h2>Nuestros Socios Comerciales</h2>
+      </div>
+    </div>
+
+    <div class="partners-carousel-track">
+      <!-- Primer Set de Logos -->
+      <div class="partner-card"><img src="img/ATT_logo.png" alt="Socio Comercial 1"></div>
+      <div class="partner-card"><img src="img/MercadoLibre_esD6IWH.png" alt="Socio Comercial 2"></div>
+      <div class="partner-card"><img src="img/logo-rabbit.webp" alt="Socio Comercial 3"></div>
+      <div class="partner-card"><img src="img/logo_sql_nb.png" alt="Socio Comercial 4"></div>
+      <div class="partner-card"><img src="img/Fuller_Cosmetics.png" alt="Socio Comercial 5"></div>
+      <div class="partner-card"><img src="img/Liverpool_logo_2023.png" alt="Socio Comercial 6"></div>
+	  <div class="partner-card"><img src="img/Logotipo_del_IMSS.svg.webp" alt="Socio Comercial 7"></div>
+
+      <!-- Set Duplicado para Continuidad Infinita del Carrusel -->
+      <div class="partner-card"><img src="img/ATT_logo.png" alt="Socio Comercial 1"></div>
+      <div class="partner-card"><img src="img/MercadoLibre_esD6IWH.png" alt="Socio Comercial 2"></div>
+      <div class="partner-card"><img src="img/logo-rabbit.webp" alt="Socio Comercial 3"></div>
+      <div class="partner-card"><img src="img/logo_sql_nb.png" alt="Socio Comercial 4"></div>
+      <div class="partner-card"><img src="img/Fuller_Cosmetics.png" alt="Socio Comercial 5"></div>
+      <div class="partner-card"><img src="img/Liverpool_logo_2023.png" alt="Socio Comercial 6"></div>
+	  <div class="partner-card"><img src="img/Logotipo_del_IMSS.svg.webp" alt="Socio Comercial 7"></div>
+    </div>
+  </section>
 
   <section class="mv-section reveal" id="mision-vision">
     <div class="container">
@@ -638,24 +689,23 @@
   <section class="video-section reveal" id="video">
     <div class="container">
       <div class="video-container-grid">
-        <div class="diagonal-wrapper">
-          <div class="diagonal-pill-container">
-            <img src="img/Caratula.jpg" alt="Caratula" class="video-thumb">
-            <svg class="diagonal-svg-overlay" viewBox="0 0 600 440" preserveAspectRatio="none">
-              <defs>
-                <mask id="pill-mask">
+<div class="diagonal-wrapper">
+  <div class="diagonal-pill-container">
+    <img src="img/Caratula.jpg" alt="Caratula" class="video-thumb">
+    <svg class="diagonal-svg-overlay" viewBox="0 0 600 440" preserveAspectRatio="none">
+      <defs>
+        <mask id="pill-mask">
                   <rect width="600" height="440" fill="black" />
                   <rect x="130" y="-80" width="85" height="600" rx="42" fill="white" transform="rotate(35, 172, 220)" />
                   <rect x="235" y="-80" width="85" height="600" rx="42" fill="white" transform="rotate(35, 277, 220)" />
                   <rect x="340" y="-80" width="85" height="600" rx="42" fill="white" transform="rotate(35, 382, 220)" />
                 </mask>
               </defs>
-              <rect width="600" height="440" fill="white" mask="url(#pill-mask-inv)" style="mask-composite: exclude;" />
-              <rect x="30" y="-50" width="60" height="500" rx="30" fill="#006837" transform="rotate(35, 60, 200)" />
-              <rect x="445" y="80" width="65" height="450" rx="32" fill="#52B043" transform="rotate(35, 477, 305)" />
-              <rect x="495" y="150" width="65" height="400" rx="32" fill="#006837" transform="rotate(35, 527, 350)" />
-            </svg>
-
+             <rect width="600" height="440" fill="white" mask="url(#pill-mask-inv)" style="mask-composite: exclude;" />
+      <rect x="30" y="-50" width="60" height="500" rx="30" fill="#006837" transform="rotate(35, 60, 200)" />
+      <rect x="445" y="80" width="65" height="450" rx="32" fill="#52B043" transform="rotate(35, 477, 305)" />
+      <rect x="495" y="150" width="65" height="400" rx="32" fill="#006837" transform="rotate(35, 527, 350)" />
+    </svg>
             <div class="play-btn-overlay" id="openVideoBtn">
               <i data-lucide="play" style="width: 36px; height: 36px; fill: currentColor;"></i>
             </div>
@@ -885,9 +935,6 @@
   <script>
     lucide.createIcons();
 
-    // ==========================================
-    // MENÚ MÓVIL DESPLEGABLE
-    // ==========================================
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.querySelector('.nav-menu');
 
@@ -1126,7 +1173,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let globalGeoData = null;
 
-  // Función encargada de dibujar/redibujar el mapa según las dimensiones actuales del contenedor
   function renderMap() {
     if (!globalGeoData) return;
 
@@ -1135,14 +1181,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     svg.attr("viewBox", `0 0 ${width} ${height}`);
 
-    // La proyección D3 ajusta automáticamente el mapa al ancho y alto dinámicos del contenedor
     const projection = d3.geoMercator().fitSize([width, height], globalGeoData);
     const path = d3.geoPath().projection(projection);
 
-    // Selección de elementos
     const paths = mapGroup.selectAll("path").data(globalGeoData.features);
 
-    // Actualización / Creación de estados
     paths.enter()
       .append("path")
       .merge(paths)
@@ -1173,14 +1216,12 @@ window.addEventListener('DOMContentLoaded', () => {
     paths.exit().remove();
   }
 
-  // Cargar datos GeoJSON una sola vez
   const geoJsonData = "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/mexico.geojson";
   d3.json(geoJsonData).then(data => {
     globalGeoData = data;
     renderMap();
   });
 
-  // Re-renderizar dinámicamente si cambia el tamaño de la pantalla o la orientación del móvil
   window.addEventListener('resize', renderMap);
 });
 
@@ -1196,7 +1237,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     reveals.forEach(el => observer.observe(el));
 	
-	   // Video Modal
+    // Video Modal
     const videoModal = document.getElementById('videoModal');
     const openVideoBtn = document.getElementById('openVideoBtn');
     const closeVideoBtn = document.getElementById('closeVideoBtn');
@@ -1221,7 +1262,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
-	
   </script>
 </body>
 </html>
