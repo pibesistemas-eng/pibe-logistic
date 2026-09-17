@@ -235,6 +235,99 @@
     .mv-pillar-card:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(52, 211, 153, 0.3); transform: translateY(-3px); }
     .mv-pillar-card i { color: #34d399; width: 24px; height: 24px; }
     .mv-pillar-card span { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+	
+	/* Sección Misión y Visión */
+.mv-section { 
+  padding: 100px 0; 
+  background: radial-gradient(circle at 50% 30%, #1a2921 0%, #0d1410 100%); 
+  position: relative; 
+  overflow: hidden; 
+  color: var(--white); 
+}
+
+.mv-section::before { 
+  content: ''; 
+  position: absolute; 
+  top: 0; left: 0; right: 0; bottom: 0; 
+  background-image: radial-gradient(rgba(52, 211, 153, 0.12) 1px, transparent 1px); 
+  background-size: 32px 32px; 
+  pointer-events: none; 
+}
+
+.mv-container-grid { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 32px; 
+  position: relative; 
+  z-index: 2; 
+}
+
+.mv-card-interactive { 
+  background: rgba(255, 255, 255, 0.04); 
+  backdrop-filter: blur(12px); 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  border-radius: var(--radius-lg); 
+  padding: 48px 40px; 
+  position: relative; 
+  overflow: hidden; 
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+}
+
+.mv-card-interactive:hover { 
+  transform: translateY(-8px); 
+  border-color: rgba(52, 211, 153, 0.5); 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 104, 55, 0.3); 
+}
+
+.mv-badge-label {
+  color: #34d399; 
+  font-size: 0.8rem; 
+  font-weight: 800; 
+  letter-spacing: 0.1em; 
+  text-transform: uppercase;
+}
+
+/* Grilla de pilares / certificaciones */
+.mv-highlights { 
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 16px; 
+  margin-top: 24px; 
+  grid-column: 1 / -1; 
+}
+
+.mv-pillar-card { 
+  background: rgba(255, 255, 255, 0.03); 
+  border: 1px solid rgba(255, 255, 255, 0.06); 
+  border-radius: var(--radius-md); 
+  padding: 18px; 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  transition: var(--transition-smooth); 
+}
+
+.mv-pillar-card:hover { 
+  background: rgba(255, 255, 255, 0.08); 
+  border-color: rgba(52, 211, 153, 0.3); 
+  transform: translateY(-3px); 
+}
+
+.mv-pillar-card i { color: #34d399; width: 22px; height: 22px; }
+.mv-pillar-card span { font-size: 0.9rem; font-weight: 700; color: var(--white); }
+
+/* Adaptación Responsive */
+@media (max-width: 992px) {
+  .mv-container-grid { grid-template-columns: 1fr; }
+  .mv-highlights { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 576px) {
+  .mv-highlights { grid-template-columns: 1fr; }
+}
 
     /* Sección Video */
     .video-section { padding: 100px 0; background: var(--white); position: relative; }
@@ -449,6 +542,31 @@
 		grid-column: span 1;
 	  }
 	}
+	
+/* Contenedor flexible para alinear el logo y el texto en el tooltip */
+.tooltip-fulfillment-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Ajuste del logo adaptado al tooltip */
+.fulfillment-logo {
+  width: 28px;                  /* Tamaño compacto proporcional */
+  height: 28px;
+  object-fit: contain;          /* Mantiene la relación de aspecto sin distorsionar */
+  flex-shrink: 0;               /* Evita que el logo se aplaste */
+  border-radius: 4px;
+  transition: transform 0.25s ease, filter 0.25s ease; /* Transición suave */
+}
+
+/* Transición elegante al pasar el cursor sobre el tooltip */
+#tooltip:hover .fulfillment-logo {
+  transform: scale(1.08);       /* Crecimiento sutil sin romper la maquetación */
+  filter: brightness(1.1);
+} 
+}
   </style>
 </head>
 <body>
@@ -641,50 +759,54 @@
     </div>
   </section>
 
-  <section class="mv-section reveal" id="mision-vision">
-    <div class="container">
-      <div class="section-title">
-        <span class="sub-tag">NUESTRO PROPÓSITO</span>
-        <h2>Misión y Visión</h2>
+<section class="mv-section reveal" id="mision-vision">
+  <div class="container">
+    <div class="section-title">
+      <span class="sub-tag">NUESTRO PROPÓSITO</span>
+      <h2>Misión y Visión</h2>
+    </div>
+
+    <div class="mv-container-grid">
+      <!-- Tarjeta Misión -->
+      <div class="mv-card-interactive">
+        <span class="mv-bg-number">01</span>
+        <div class="mv-card-header">
+          <div class="mv-icon-badge"><i data-lucide="target" style="width: 32px; height: 32px;"></i></div>
+          <div>
+            <span class="mv-badge-label">Compromiso Activo</span>
+            <h3>Misión</h3>
+          </div>
+        </div>
+        <div class="mv-card-body">
+          <p>Lograr en nuestros clientes y socios comerciales una <strong>alianza firme basada en la confianza</strong>, puntualidad y manejo de su producto, garantizando la certeza de cumplir con todos y cada uno de los estándares de calidad hasta su destino final.</p>
+        </div>
       </div>
 
-      <div class="mv-container-grid">
-        <div class="mv-card-interactive">
-          <span class="mv-bg-number">01</span>
-          <div class="mv-card-header">
-            <div class="mv-icon-badge"><i data-lucide="target" style="width: 32px; height: 32px;"></i></div>
-            <div>
-              <span style="color: #34d399; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;">Compromiso Activo</span>
-              <h3>Misión</h3>
-            </div>
-          </div>
-          <div class="mv-card-body">
-            <p>Lograr en nuestros clientes y socios comerciales una <strong>alianza firme basada en la confianza</strong>, puntualidad y manejo de su producto, garantizando la certeza de cumplir con todos y cada uno de los estándares de calidad hasta su destino final.</p>
+      <!-- Tarjeta Visión -->
+      <div class="mv-card-interactive">
+        <span class="mv-bg-number">02</span>
+        <div class="mv-card-header">
+          <div class="mv-icon-badge"><i data-lucide="compass" style="width: 32px; height: 32px;"></i></div>
+          <div>
+            <span class="mv-badge-label">Proyección Futura</span>
+            <h3>Visión</h3>
           </div>
         </div>
+        <div class="mv-card-body">
+          <p>Ser una <strong>empresa líder en soluciones logísticas</strong> con presencia en todo el país, brindando servicios con alto profesionalismo, siempre a través de un recurso humano capacitado y motivado que alcance su máximo desarrollo.</p>
+        </div>
+      </div>
 
-        <div class="mv-card-interactive">
-          <span class="mv-bg-number">02</span>
-          <div class="mv-card-header">
-            <div class="mv-icon-badge"><i data-lucide="compass" style="width: 32px; height: 32px;"></i></div>
-            <div>
-              <span style="color: #34d399; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;">Proyección Futura</span>
-              <h3>Visión</h3>
-            </div>
-          </div>
-          <div class="mv-card-body">
-            <p>Ser una <strong>empresa líder en soluciones logísticas</strong> con presencia en todo el país, brindando servicios con alto profesionalismo, siempre a través de un recurso humano capacitado y motivado que alcance su máximo desarrollo.</p>
-          </div>
-        </div>
-
-        <div class="mv-highlights">
-          <div class="mv-pillar-card"><i data-lucide="shield-check"></i><span>Garantía de Confianza</span></div>
-          <div class="mv-pillar-card"><i data-lucide="clock"></i><span>Puntualidad Absoluta</span></div>
-          <div class="mv-pillar-card"><i data-lucide="award"></i><span>Calidad Certificada</span></div>
-        </div>
+      <!-- Pilares / Certificaciones inferiores -->
+      <div class="mv-highlights">
+        <div class="mv-pillar-card"><i data-lucide="shield-check"></i><span>Dun & BradStreet</span></div>
+        <div class="mv-pillar-card"><i data-lucide="clock"></i><span>Garantía de Tiempo</span></div>
+        <div class="mv-pillar-card"><i data-lucide="award"></i><span>Certificación INFILTER</span></div>
+        <div class="mv-pillar-card"><i data-lucide="lock"></i><span>Sistema Ópalo</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <section class="video-section reveal" id="video">
     <div class="container">
@@ -1195,22 +1317,26 @@ window.addEventListener('DOMContentLoaded', () => {
         return oficinasNormalizadas[normalizarTexto(name)] ? "state state-office" : "state state-red";
       })
       .on("mousemove", (event, d) => {
-        const name = d.properties.name || d.properties.state_name || "Estado";
-        const oficina = oficinasNormalizadas[normalizarTexto(name)];
+  const name = d.properties.name || d.properties.state_name || "Estado";
+  const oficina = oficinasNormalizadas[normalizarTexto(name)];
 
-        let content = `<strong>${name}</strong>`;
-        if (oficina) {
-          content += `<br/><span style="font-weight:normal; font-size:11px;">🏢 Fulfillment: ${oficina}</span>`;
-        } else {
-          content += `<br/><span style="font-weight:normal; font-size:11px;">🚚 Cobertura Operativa</span>`;
-        }
+  let content = `<strong>${name}</strong>`;
+  if (oficina) {
+    content += `
+      <div class="tooltip-fulfillment-content">
+        <img src="img/Logos.png" alt="PIBE LOGISTIC" class="fulfillment-logo">
+        <span style="font-weight: normal; font-size: 11px;">Fulfillment: ${oficina}</span>
+      </div>`;
+  } else {
+    content += `<br/><span style="font-weight:normal; font-size:11px;">🚚 Cobertura Operativa</span>`;
+  }
 
-        const rect = wrapperNode.getBoundingClientRect();
-        tooltip.html(content)
-          .style("display", "block")
-          .style("left", (event.clientX - rect.left + 15) + "px")
-          .style("top", (event.clientY - rect.top - 15) + "px");
-      })
+  const rect = wrapperNode.getBoundingClientRect();
+  tooltip.html(content)
+    .style("display", "block")
+    .style("left", (event.clientX - rect.left + 15) + "px")
+    .style("top", (event.clientY - rect.top - 15) + "px");
+})
       .on("mouseleave", () => tooltip.style("display", "none"));
 
     paths.exit().remove();
