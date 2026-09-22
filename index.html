@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <link rel="icon" type="Logos" href="img/Logos.png">
+    <link rel="icon" type="Logos" href="img/Logos.png">
   <title>PIBE LOGISTIC | Operación Logística 3PL de Alta Tecnología</title>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
@@ -154,9 +154,7 @@
     .about-banner-text { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 14px; }
     .about-banner-text i { color: #34d399; flex-shrink: 0; }
 
-    /* =========================================================
-       NUEVA SECCIÓN: CARRUSEL DE SOCIOS
-       ========================================================= */
+    /* CARRUSEL DE SOCIOS */
     .partners-section {
       padding: 60px 0;
       background: var(--white);
@@ -367,7 +365,17 @@
     .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
     .legend-dot.cobertura { background: #006837; }
     .legend-dot.matriz { background: #34d399; box-shadow: 0 0 8px rgba(52, 211, 153, 0.8); }
-    .map-wrapper { position: relative; width: 100%; height: 600px; background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f8fafc 100%); border-radius: 20px; border: 1px solid var(--slate-border); overflow: hidden; }
+    
+    /* MAPA: Tamaño reducido para escritorio (PC) */
+    .map-wrapper { 
+      position: relative; 
+      width: 100%; 
+      height: 420px; /* Reducido de 600px a 420px */
+      background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f8fafc 100%); 
+      border-radius: 20px; 
+      border: 1px solid var(--slate-border); 
+      overflow: hidden; 
+    }
     .state { stroke: var(--white); stroke-width: 1.2; transition: fill 0.35s ease, filter 0.35s ease, transform 0.35s ease; cursor: pointer; }
     .state-red, .state-office { fill: #006837; }
     .state:hover { fill: #34d399 !important; filter: drop-shadow(0px 4px 12px rgba(52, 211, 153, 0.6)); }
@@ -510,6 +518,7 @@
       .infra-grid, .services-grid { grid-template-columns: 1fr; }
       .quote-card-standalone { padding: 28px 18px; }
 
+      /* MAPA EN TELÉFONOS: Mantiene su tamaño adecuado para móvil */
       .map-wrapper {
         height: 380px;
       }
@@ -544,7 +553,6 @@
 	  }
 	}
 	
-/* Contenedor flexible para alinear el logo y el texto en el tooltip */
 .tooltip-fulfillment-content {
   display: flex;
   align-items: center;
@@ -552,24 +560,20 @@
   margin-top: 4px;
 }
 
-/* Ajuste del logo adaptado al tooltip */
 .fulfillment-logo {
   width: 28px;
   height: 28px;
   object-fit: contain;
   flex-shrink: 0;
   border-radius: 4px;
-  /* Convierte la imagen a blanco puro */
   filter: brightness(0) invert(1); 
   opacity: 0.9;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* Transición suave al pasar el cursor */
 #tooltip:hover .fulfillment-logo {
   transform: scale(1.08);
   opacity: 1;
-} 
 }
   </style>
 </head>
@@ -680,7 +684,6 @@
       </div>
     </div>
 
-    <!-- Grilla Bento de 7 Tarjetas -->
     <div class="about-services-bento grid-7-items">
       <div class="about-pillar-card">
         <div class="about-pillar-icon"><i data-lucide="plane" style="width: 26px; height: 26px;"></i></div>
@@ -731,9 +734,6 @@
   </div>
 </section>
 
-  <!-- =========================================================
-       NUEVA SECCIÓN: CARRUSEL DE NUESTROS SOCIOS
-       ========================================================= -->
   <section class="partners-section reveal" id="socios">
     <div class="container">
       <div class="section-title" style="margin-bottom: 30px;">
@@ -743,7 +743,6 @@
     </div>
 
     <div class="partners-carousel-track">
-      <!-- Primer Set de Logos -->
       <div class="partner-card"><img src="img/ATT_logo.png" alt="Socio Comercial 1"></div>
       <div class="partner-card"><img src="img/MercadoLibre_esD6IWH.png" alt="Socio Comercial 2"></div>
       <div class="partner-card"><img src="img/logo-rabbit.webp" alt="Socio Comercial 3"></div>
@@ -753,7 +752,6 @@
 	  <div class="partner-card"><img src="img/Logotipo_del_IMSS.svg.webp" alt="Socio Comercial 7"></div>
 	  <div class="partner-card"><img src="img/Aeromexico-Logo.png" alt="Socio Comercial 8"></div>
 
-      <!-- Set Duplicado para Continuidad Infinita del Carrusel -->
       <div class="partner-card"><img src="img/ATT_logo.png" alt="Socio Comercial 1"></div>
       <div class="partner-card"><img src="img/MercadoLibre_esD6IWH.png" alt="Socio Comercial 2"></div>
       <div class="partner-card"><img src="img/logo-rabbit.webp" alt="Socio Comercial 3"></div>
@@ -773,7 +771,6 @@
     </div>
 
     <div class="mv-container-grid">
-      <!-- Tarjeta Misión -->
       <div class="mv-card-interactive">
         <span class="mv-bg-number">01</span>
         <div class="mv-card-header">
@@ -788,7 +785,6 @@
         </div>
       </div>
 
-      <!-- Tarjeta Visión -->
       <div class="mv-card-interactive">
         <span class="mv-bg-number">02</span>
         <div class="mv-card-header">
@@ -803,7 +799,6 @@
         </div>
       </div>
 
-      <!-- Pilares / Certificaciones inferiores -->
       <div class="mv-highlights">
         <div class="mv-pillar-card"><i data-lucide="shield-check"></i><span>Dun & BradStreet</span></div>
         <div class="mv-pillar-card"><i data-lucide="clock"></i><span>Garantía de Tiempo</span></div>
