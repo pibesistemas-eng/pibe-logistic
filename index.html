@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="Logos" href="img/Logos.png">
+  <link rel="icon" type="Logos" href="img/Logos.png">
   <title>PIBE LOGISTIC | Operación Logística 3PL de Alta Tecnología</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 
@@ -13,12 +17,16 @@
       --primary: #006837;
       --primary-dark: #004d28;
       --primary-light: #117a38;
+      --accent-light: #34d399;
       --dark-graphite: #1a1a1a;
       --dark-card: #262626;
       --slate-ice: #f4f6f8;
       --slate-border: #e2e8f0;
       --slate-text-muted: #555555;
       --white: #ffffff;
+      
+      --panel-card: rgba(11, 26, 21, 0.95);
+      --panel-border: rgba(52, 211, 153, 0.2);
       
       --radius-sm: 10px;
       --radius-md: 16px;
@@ -29,7 +37,7 @@
       --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif; }
     html { scroll-behavior: smooth; }
     body { background-color: var(--white); color: var(--dark-graphite); line-height: 1.6; overflow-x: hidden; }
 
@@ -57,7 +65,6 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      border-bottom: 1px solid var(--slate-border);
       transition: var(--transition-smooth);
     }
     .nav-container { display: flex; justify-content: space-between; align-items: center; height: 95px; }
@@ -105,16 +112,16 @@
     .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); transition: var(--transition-smooth); cursor: pointer; }
     .dot.active { background: var(--white); width: 26px; border-radius: 10px; }
 
-	.tracking-box-wide { 
-	  background: rgba(0, 104, 55, 0.12); 
-	  backdrop-filter: blur(16px); 
-	  -webkit-backdrop-filter: blur(16px);
-	  padding: 28px 36px; 
-	  border-radius: var(--radius-lg); 
-	  border: 1px solid rgba(0, 104, 55, 0.25); 
-	  box-shadow: var(--shadow-md); 
-	  width: 100%; 
-	}
+    .tracking-box-wide { 
+      background: rgba(0, 104, 55, 0.12); 
+      backdrop-filter: blur(16px); 
+      -webkit-backdrop-filter: blur(16px);
+      padding: 28px 36px; 
+      border-radius: var(--radius-lg); 
+      border: 1px solid rgba(0, 104, 55, 0.25); 
+      box-shadow: var(--shadow-md); 
+      width: 100%; 
+    }
     .tracking-box-wide label { display: flex; align-items: center; gap: 10px; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800; margin-bottom: 14px; color: var(--primary); }
     .input-inline-wide { display: flex; gap: 14px; width: 100%; }
     .input-inline-wide input { flex: 1; padding: 16px 22px; border-radius: var(--radius-sm); border: 1px solid var(--slate-border); background: var(--white); color: var(--dark-graphite); outline: none; transition: var(--transition-smooth); font-weight: 600; font-size: 1.05rem; }
@@ -135,7 +142,7 @@
     .about-hero-title span { color: var(--primary); }
     .about-lead-text { font-size: 1.08rem; color: var(--slate-text-muted); line-height: 1.75; }
 
-    .about-card-stats { background: linear-gradient(135deg, var(--dark-graphite) 0%, #262626 100%); border-radius: var(--radius-lg); padding: 40px; color: var(--white); display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-md); position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+    .about-card-stats { background: linear-gradient(135deg, var(--dark-graphite) 0%, #262626 100%); border-radius: var(--radius-lg); padding: 40px; color: var(--white); display: flex; flex-direction: column; justify-style: space-between; box-shadow: var(--shadow-md); position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
     .about-card-stats::after { content: ''; position: absolute; bottom: -40px; right: -40px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(52, 211, 153, 0.45) 0%, rgba(0, 104, 55, 0.35) 60%, transparent 100%); border-radius: 50%; filter: blur(50px); pointer-events: none; }
     .about-stat-item { margin-bottom: 24px; }
     .about-stat-item:last-child { margin-bottom: 0; }
@@ -229,104 +236,42 @@
     .mv-card-interactive:hover .mv-icon-badge { transform: rotate(-6deg) scale(1.08); background: linear-gradient(135deg, #34d399 0%, var(--primary) 100%); color: #0d1410; }
     .mv-card-header h3 { font-size: 1.8rem; font-weight: 800; color: var(--white); letter-spacing: -0.01em; }
     .mv-card-body p { color: rgba(255, 255, 255, 0.82); font-size: 1.05rem; line-height: 1.75; position: relative; z-index: 2; }
-    .mv-highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; grid-column: 1 / -1; }
-    .mv-pillar-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: var(--radius-md); padding: 20px; display: flex; align-items: center; gap: 14px; transition: var(--transition-smooth); }
-    .mv-pillar-card:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(52, 211, 153, 0.3); transform: translateY(-3px); }
-    .mv-pillar-card i { color: #34d399; width: 24px; height: 24px; }
-    .mv-pillar-card span { font-size: 0.95rem; font-weight: 700; color: var(--white); }
-	
-	/* Sección Misión y Visión */
-.mv-section { 
-  padding: 100px 0; 
-  background: radial-gradient(circle at 50% 30%, #1a2921 0%, #0d1410 100%); 
-  position: relative; 
-  overflow: hidden; 
-  color: var(--white); 
-}
+    
+    .mv-badge-label {
+      color: #34d399; 
+      font-size: 0.8rem; 
+      font-weight: 800; 
+      letter-spacing: 0.1em; 
+      text-transform: uppercase;
+    }
 
-.mv-section::before { 
-  content: ''; 
-  position: absolute; 
-  top: 0; left: 0; right: 0; bottom: 0; 
-  background-image: radial-gradient(rgba(52, 211, 153, 0.12) 1px, transparent 1px); 
-  background-size: 32px 32px; 
-  pointer-events: none; 
-}
+    .mv-highlights { 
+      display: grid; 
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 16px; 
+      margin-top: 24px; 
+      grid-column: 1 / -1; 
+    }
 
-.mv-container-grid { 
-  display: grid; 
-  grid-template-columns: 1fr 1fr; 
-  gap: 32px; 
-  position: relative; 
-  z-index: 2; 
-}
+    .mv-pillar-card { 
+      background: rgba(255, 255, 255, 0.03); 
+      border: 1px solid rgba(255, 255, 255, 0.06); 
+      border-radius: var(--radius-md); 
+      padding: 18px; 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      transition: var(--transition-smooth); 
+    }
 
-.mv-card-interactive { 
-  background: rgba(255, 255, 255, 0.04); 
-  backdrop-filter: blur(12px); 
-  border: 1px solid rgba(255, 255, 255, 0.1); 
-  border-radius: var(--radius-lg); 
-  padding: 48px 40px; 
-  position: relative; 
-  overflow: hidden; 
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: space-between; 
-}
+    .mv-pillar-card:hover { 
+      background: rgba(255, 255, 255, 0.08); 
+      border-color: rgba(52, 211, 153, 0.3); 
+      transform: translateY(-3px); 
+    }
 
-.mv-card-interactive:hover { 
-  transform: translateY(-8px); 
-  border-color: rgba(52, 211, 153, 0.5); 
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 104, 55, 0.3); 
-}
-
-.mv-badge-label {
-  color: #34d399; 
-  font-size: 0.8rem; 
-  font-weight: 800; 
-  letter-spacing: 0.1em; 
-  text-transform: uppercase;
-}
-
-/* Grilla de pilares / certificaciones */
-.mv-highlights { 
-  display: grid; 
-  grid-template-columns: repeat(4, 1fr); 
-  gap: 16px; 
-  margin-top: 24px; 
-  grid-column: 1 / -1; 
-}
-
-.mv-pillar-card { 
-  background: rgba(255, 255, 255, 0.03); 
-  border: 1px solid rgba(255, 255, 255, 0.06); 
-  border-radius: var(--radius-md); 
-  padding: 18px; 
-  display: flex; 
-  align-items: center; 
-  gap: 12px; 
-  transition: var(--transition-smooth); 
-}
-
-.mv-pillar-card:hover { 
-  background: rgba(255, 255, 255, 0.08); 
-  border-color: rgba(52, 211, 153, 0.3); 
-  transform: translateY(-3px); 
-}
-
-.mv-pillar-card i { color: #34d399; width: 22px; height: 22px; }
-.mv-pillar-card span { font-size: 0.9rem; font-weight: 700; color: var(--white); }
-
-/* Adaptación Responsive */
-@media (max-width: 992px) {
-  .mv-container-grid { grid-template-columns: 1fr; }
-  .mv-highlights { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 576px) {
-  .mv-highlights { grid-template-columns: 1fr; }
-}
+    .mv-pillar-card i { color: #34d399; width: 22px; height: 22px; }
+    .mv-pillar-card span { font-size: 0.9rem; font-weight: 700; color: var(--white); }
 
     /* Sección Video */
     .video-section { padding: 100px 0; background: var(--white); position: relative; }
@@ -352,36 +297,54 @@
     .modal-content { position: relative; width: 90%; max-width: 900px; aspect-ratio: 16/9; background: #000; border-radius: var(--radius-md); overflow: hidden; }
     .close-modal { position: absolute; top: -40px; right: 0; color: var(--white); font-size: 2rem; cursor: pointer; }
 
-    /* Cobertura / Mapa */
+    /* ESTILOS DEL MAPA INTERACTIVO DE COBERTURA */
     .map-section { padding: 100px 0; background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); }
-    .main-map-card { background: var(--white); padding: 44px; border-radius: 28px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06); border: 1px solid rgba(0, 104, 55, 0.1); position: relative; overflow: hidden; }
-    .main-map-card::after { content: ''; position: absolute; bottom: -60px; right: -60px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(52, 211, 153, 0.35) 0%, rgba(0, 104, 55, 0.25) 60%, transparent 100%); border-radius: 50%; filter: blur(60px); pointer-events: none; z-index: 1; }
-    .header-title, .map-wrapper { position: relative; z-index: 2; }
-    .header-title-left { display: flex; align-items: center; gap: 16px; }
-    .header-title-left h2 { color: var(--dark-graphite); margin: 0; text-transform: uppercase; font-size: 1.75rem; font-weight: 900; letter-spacing: -0.02em; }
-    .header-title-left span { color: var(--slate-text-muted); font-size: 0.95rem; display: block; margin-top: 2px; }
-    .map-legend { display: flex; align-items: center; gap: 16px; background: var(--slate-ice); padding: 8px 16px; border-radius: 50px; border: 1px solid var(--slate-border); }
-    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 700; color: var(--dark-graphite); }
-    .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
-    .legend-dot.cobertura { background: #006837; }
-    .legend-dot.matriz { background: #34d399; box-shadow: 0 0 8px rgba(52, 211, 153, 0.8); }
+    .main-map-card { background: var(--panel-card); backdrop-filter: blur(20px); border-radius: var(--radius-lg); border: 1px solid var(--panel-border); box-shadow: 0 0 40px rgba(0,0,0,.9), inset 0 0 15px rgba(16,185,129,.05); padding: 36px; display: flex; flex-direction: column; gap: 28px; }
     
-    /* MAPA: Tamaño reducido para escritorio (PC) */
-    .map-wrapper { 
-      position: relative; 
-      width: 100%; 
-      height: 420px; /* Reducido de 600px a 420px */
-      background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f8fafc 100%); 
-      border-radius: 20px; 
-      border: 1px solid var(--slate-border); 
-      overflow: hidden; 
-    }
-    .state { stroke: var(--white); stroke-width: 1.2; transition: fill 0.35s ease, filter 0.35s ease, transform 0.35s ease; cursor: pointer; }
-    .state-red, .state-office { fill: #006837; }
-    .state:hover { fill: #34d399 !important; filter: drop-shadow(0px 4px 12px rgba(52, 211, 153, 0.6)); }
-    .map-pin { fill: var(--white); stroke: var(--primary); stroke-width: 3; filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.15)); }
-    .map-pin-inner { fill: var(--primary); }
-    #tooltip { position: absolute; display: none; padding: 10px 16px; background: rgba(26, 26, 26, 0.95); backdrop-filter: blur(8px); color: var(--white); font-size: 13px; border-radius: 10px; pointer-events: none; box-shadow: 0 10px 25px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); z-index: 100; line-height: 1.4; }
+    .header-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid rgba(255,255,255,.08); padding-bottom: 20px; }
+    .brand-title h2 { font-size: 1.75rem; font-weight: 800; display: flex; align-items: center; gap: 12px; text-transform: uppercase; color: var(--white); margin: 0; }
+    .highlight { color: var(--accent-light); }
+    .tech-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent-light); background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.3); padding: 2px 8px; border-radius: 4px; }
+    .brand-title p { color: #94a3b8; font-size: 0.875rem; margin-top: 4px; }
+    
+    .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pill-btn { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); color: #94a3b8; padding: 8px 16px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-transform: uppercase; transition: var(--transition-smooth); }
+    .pill-btn:hover, .pill-btn.active { background: rgba(16,185,129,.18); color: var(--accent-light); border-color: #10b981; box-shadow: 0 0 12px rgba(16,185,129,.3); }
+    
+    .content-layout { display: grid; grid-template-columns: 1fr 340px; gap: 28px; }
+    
+    .map-canvas { position: relative; height: 580px; background: #030806; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); overflow: hidden; }
+    .leaflet-map { width: 100%; height: 100%; background: #030806; }
+    .leaflet-control-attribution { background: rgba(3,8,6,.75)!important; color: #64748b!important; }
+    .leaflet-control-attribution a { color: #94a3b8!important; }
+    .leaflet-control-zoom a { background: #0b1a15!important; color: #fff!important; border-color: #1c3b31!important; }
+
+    /* Marcadores y Animaciones del Mapa */
+    .dest-marker-wrapper { transition: opacity .25s ease; pointer-events: auto; }
+    .dest-marker-wrapper.hidden-marker { opacity: 0!important; pointer-events: none!important; }
+    .dest-marker { width: 12px; height: 12px; border-radius: 50%; background: #10b981; border: 2px solid #fff; box-shadow: 0 0 0 5px rgba(16,185,129,.25), 0 0 14px #10b981; cursor: pointer; transition: transform .2s ease; }
+    .dest-marker:hover { transform: scale(1.4); }
+    .dest-marker.hub { width: 15px; height: 15px; background: #fff; border-color: #10b981; box-shadow: 0 0 0 6px rgba(16,185,129,.3), 0 0 18px #10b981; }
+
+    .plane-container { width: 22px; height: 22px; position: relative; pointer-events: none; will-change: transform; opacity: 0; transition: opacity .25s ease; }
+    .plane-container.active-flight { opacity: 1; }
+    .plane-svg { width: 100%; height: 100%; color: #ffffff; filter: drop-shadow(0 0 6px #10b981); display: block; }
+    .route-line { stroke: #10b981; stroke-width: 1.5; stroke-dasharray: 4 6; opacity: 0; fill: none; transition: opacity .25s ease; }
+    .route-line.active-route { opacity: .8; }
+
+    .inspector-panel { display: flex; flex-direction: column; gap: 20px; }
+    .inspector-card { background: rgba(11,26,21,.8); border: 1px solid var(--panel-border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px; color: #fff; }
+    .badge-map { font-family: 'JetBrains Mono', monospace; font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent-light); font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .inspector-card h3 { font-size: 1.35rem; font-weight: 800; color: #fff; }
+    .inspector-card p { font-size: .875rem; color: #94a3b8; line-height: 1.6; }
+    .stats-list { display: flex; flex-direction: column; gap: 12px; border-top: 1px solid rgba(255,255,255,.08); padding-top: 16px; font-family: 'JetBrains Mono', monospace; }
+    .stat-item { display: flex; justify-content: space-between; font-size: .8rem; }
+    .stat-label { color: #64748b; }
+    .stat-value { font-weight: 700; }
+    .footer-badge-map { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 16px; display: flex; align-items: center; gap: 12px; font-size: .825rem; color: #94a3b8; }
+    .leaflet-tooltip.city-tooltip { background: transparent; border: 0; box-shadow: none; padding: 0; color: #fff; font: 600 10px 'Plus Jakarta Sans', sans-serif; text-shadow: 0 1px 4px #000, 0 0 3px #000; pointer-events: none; transition: opacity .25s ease; }
+    .leaflet-tooltip.city-tooltip.hidden-tooltip { opacity: 0!important; }
+    .leaflet-tooltip.city-tooltip:before { display: none; }
 
     /* Servicios */
     .services-section { padding: 100px 0; background: #0d1410 !important; background-image: radial-gradient(circle at 50% 30%, #1a2921 0%, #0d1410 100%) !important; position: relative; overflow: hidden; color: #ffffff !important; }
@@ -429,7 +392,6 @@
     .footer-col a:hover { color: #34d399; padding-left: 4px; }
     .phone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; font-size: 0.85rem; color: var(--white); }
     .phone-grid span { display: flex; align-items: center; gap: 6px; }
-    .footer-services-list { display: flex; gap: 28px; }
     .footer-bottom { border-top: 1px solid #2d2d2d; padding: 24px 0; text-align: center; font-size: 0.85rem; background: #141414; }
 
     /* Redes Sociales Footer */
@@ -485,14 +447,13 @@
       .about-banner-footer { flex-direction: column; text-align: center; }
 
       .mv-container-grid { grid-template-columns: 1fr; }
-      .mv-highlights { grid-template-columns: 1fr; }
+      .mv-highlights { grid-template-columns: repeat(2, 1fr); }
 
       .video-container-grid { grid-template-columns: 1fr; gap: 30px; }
       .video-content-card { margin-left: 0; padding: 36px 28px; }
       .delivery-illustration { display: none; }
 
-      .map-wrapper { height: 450px; }
-      .header-title { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+      .content-layout { grid-template-columns: 1fr; }
 
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
     }
@@ -517,64 +478,28 @@
 
       .infra-grid, .services-grid { grid-template-columns: 1fr; }
       .quote-card-standalone { padding: 28px 18px; }
-
-      /* MAPA EN TELÉFONOS: Mantiene su tamaño adecuado para móvil */
-      .map-wrapper {
-        height: 380px;
-      }
-      .map-legend { flex-wrap: wrap; border-radius: 12px; }
+      
+      .mv-highlights { grid-template-columns: 1fr; }
+      .map-canvas { height: 400px; }
     }
-	
-	.about-services-bento.grid-7-items {
-	  display: grid;
-	  grid-template-columns: repeat(3, 1fr);
-	  gap: 1.5rem;
-	}
 
-	.about-services-bento.grid-7-items .card-full-width {
-	  grid-column: span 3;
-	}
+    .about-services-bento.grid-7-items {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
 
-	@media (max-width: 992px) {
-	  .about-services-bento.grid-7-items {
-		grid-template-columns: repeat(2, 1fr);
-	  }
-	  .about-services-bento.grid-7-items .card-full-width {
-		grid-column: span 2;
-	  }
-	}
+    @media (max-width: 992px) {
+      .about-services-bento.grid-7-items {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
-	@media (max-width: 600px) {
-	  .about-services-bento.grid-7-items {
-		grid-template-columns: 1fr;
-	  }
-	  .about-services-bento.grid-7-items .card-full-width {
-		grid-column: span 1;
-	  }
-	}
-	
-.tooltip-fulfillment-content {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.fulfillment-logo {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  flex-shrink: 0;
-  border-radius: 4px;
-  filter: brightness(0) invert(1); 
-  opacity: 0.9;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-}
-
-#tooltip:hover .fulfillment-logo {
-  transform: scale(1.08);
-  opacity: 1;
-}
+    @media (max-width: 600px) {
+      .about-services-bento.grid-7-items {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -606,135 +531,133 @@
   </header>
 
   <section class="hero reveal" id="inicio">
-  <canvas id="hero-canvas"></canvas>
-  <div class="container">
-    <div class="hero-main-grid">
-      <div class="hero-text">
-        
-        <h1>Llevando tu Logística al Siguiente Nivel</h1>
-        <p>Somos tu aliado logístico que garantiza cada entrega. Con cobertura nacional, 
-		tecnología propia e infraestructura AAA, convertimos la complejidad de tu cadena 
-		de suministro en una operación simple, visible y confiable.</p>
+    <canvas id="hero-canvas"></canvas>
+    <div class="container">
+      <div class="hero-main-grid">
+        <div class="hero-text">
+          <h1>Llevando tu Logística al Siguiente Nivel</h1>
+          <p>Somos tu aliado logístico que garantiza cada entrega. Con cobertura nacional, tecnología propia e infraestructura AAA, 
+		  convertimos la complejidad de tu cadena de suministro en una operación simple, visible y confiable.</p>
+        </div>
+
+        <div class="hero-carousel">
+          <a href="#quienes-somos" class="carousel-slide active" style="background-image: url('img/Banner.gif');">
+            <div class="carousel-caption"><i data-lucide="welcome"></i> Bienvenido a Pibe Logistic — Conócenos</div>
+          </a>
+
+          <a href="#cobertura" class="carousel-slide" style="background-image: url('img/Mapa.gif');">
+            <div class="carousel-caption"><i data-lucide="map-pin"></i> Red Logística e Infraestructura Propia — Ver Cobertura</div>
+          </a>
+
+          <a href="#servicios" class="carousel-slide" style="background-image: url('empresa-2.jpg');">
+            <div class="carousel-caption"><i data-lucide="truck"></i> Flotilla y Unidades con Monitoreo GPS — Ver Cobertura</div>
+          </a>
+
+          <a href="#servicios" class="carousel-slide" style="background-image: url('empresa-3.jpg');">
+            <div class="carousel-caption"><i data-lucide="boxes"></i> Operación y Control Automatizado — Ver Servicios</div>
+          </a>
+          
+          <div class="carousel-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
       </div>
 
-      <div class="hero-carousel">
-        <a href="#quienes-somos" class="carousel-slide active" style="background-image: url('img/Banner.gif');">
-          <div class="carousel-caption"><i data-lucide="welcome"></i> Bienvenido a Pibe Logistic — Conócenos</div>
-        </a>
-
-        <a href="#cobertura" class="carousel-slide" style="background-image: url('img/Mapa.gif');">
-          <div class="carousel-caption"><i data-lucide="map-pin"></i> Red Logística e Infraestructura Propia — Ver Cobertura</div>
-        </a>
-
-        <a href="#servicios" class="carousel-slide" style="background-image: url('empresa-2.jpg');">
-          <div class="carousel-caption"><i data-lucide="truck"></i> Flotilla y Unidades con Monitoreo GPS — Ver Cobertura</div>
-        </a>
-
-        <a href="#servicios" class="carousel-slide" style="background-image: url('empresa-3.jpg');">
-          <div class="carousel-caption"><i data-lucide="boxes"></i> Operación y Control Automatizado — Ver Servicios</div>
-        </a>
-        
-        <div class="carousel-dots">
-          <div class="dot active"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
+      <div class="tracking-box-wide">
+        <label for="track-input"><i data-lucide="search" style="width: 20px;"></i> Rastrear Envío en Tiempo Real:</label>
+        <div class="input-inline-wide">
+          <input type="text" id="track-input" placeholder="Ingresa tu número de guía o código de seguimiento...">
+          <button class="btn-emerald-light"><i data-lucide="navigation" style="width: 18px;"></i> Buscar Envío</button>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="tracking-box-wide">
-      <label for="track-input"><i data-lucide="search" style="width: 20px;"></i> Rastrear Envío en Tiempo Real:</label>
-      <div class="input-inline-wide">
-        <input type="text" id="track-input" placeholder="Ingresa tu número de guía o código de seguimiento...">
-        <button class="btn-emerald-light"><i data-lucide="navigation" style="width: 18px;"></i> Buscar Envío</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="about-section reveal" id="propuesta-de-valor">
-  <div class="container">
-    <div class="section-title">
-      <span class="sub-tag">SOLUCIONES A TU MEDIDA</span>
-      <h2>¿Qué resolvemos por ti?</h2>
-    </div>
-
-    <div class="about-bento-grid">
-      <div class="about-card-hero">
-        <h3 class="about-hero-title">
-          Movemos la carga que <span>otros no pueden</span> y llegamos donde otros no llegan.
-        </h3>
-        <p class="about-lead-text">
-          Donde las paqueterías tradicionales declaran «sin cobertura», nosotros <strong>diseñamos la ruta</strong>. Te ofrecemos control total de punta a punta con <strong>operación 100% propia</strong>, sin intermediarios, eliminando retrasos y garantizando máxima seguridad desde la recolección hasta la última milla.
-        </p>
+  <section class="about-section reveal" id="propuesta-de-valor">
+    <div class="container">
+      <div class="section-title">
+        <span class="sub-tag">SOLUCIONES A TU MEDIDA</span>
+        <h2>¿Qué resolvemos por ti?</h2>
       </div>
 
-      <div class="about-card-stats">
-        <div class="about-stat-item">
-          <div class="about-stat-number">32</div>
-          <div class="about-stat-label">Estados con Operación Propia</div>
+      <div class="about-bento-grid">
+        <div class="about-card-hero">
+          <h3 class="about-hero-title">
+            Movemos la carga que <span>otros no pueden</span> y llegamos donde otros no llegan.
+          </h3>
+          <p class="about-lead-text">
+            Donde las paqueterías tradicionales declaran «sin cobertura», nosotros <strong>diseñamos la ruta</strong>. Te ofrecemos control total de punta a punta con <strong>operación 100% propia</strong>, sin intermediarios, eliminando retrasos y garantizando máxima seguridad desde la recolección hasta la última milla.
+          </p>
         </div>
-        <div class="about-stat-item">
-          <div class="about-stat-number">100%</div>
-          <div class="about-stat-label">Flota Monitoreada en Tiempo Real</div>
-        </div>
-        <div class="about-stat-item">
-          <div class="about-stat-number">1.5t-53ft</div>
-          <div class="about-stat-label">Capacidad de Flota Adaptable</div>
+
+        <div class="about-card-stats">
+          <div class="about-stat-item">
+            <div class="about-stat-number">32</div>
+            <div class="about-stat-label">Estados con Operación Propia</div>
+          </div>
+          <div class="about-stat-item">
+            <div class="about-stat-number">100%</div>
+            <div class="about-stat-label">Flota Monitoreada en Tiempo Real</div>
+          </div>
+          <div class="about-stat-item">
+            <div class="about-stat-number">1.5t-53ft</div>
+            <div class="about-stat-label">Capacidad de Flota Adaptable</div>
+          </div>
         </div>
       </div>
+
+      <div class="about-services-bento grid-7-items">
+        <div class="about-pillar-card">
+          <div class="about-pillar-icon"><i data-lucide="plane" style="width: 26px; height: 26px;"></i></div>
+          <h4>Carga Aérea Estándar</h4>
+          <p>Envíos aéreos consolidados y programados puerta a puerta con tarifas y tiempos optimizados a tu presupuesto.</p>
+        </div>
+
+        <div class="about-pillar-card">
+          <div class="about-pillar-icon"><i data-lucide="zap" style="width: 26px; height: 26px;"></i></div>
+          <h4>Carga Aérea Express</h4>
+          <p>Transporte aéreo de alta prioridad y máxima urgencia con abordaje inmediato y monitoreo de vuelo dedicado.</p>
+        </div>
+
+        <div class="about-pillar-card">
+          <div class="about-pillar-icon"><i data-lucide="map-pin" style="width: 26px; height: 26px;"></i></div>
+          <h4>Última Milla Especializada</h4>
+          <p>Esquemas B2B, B2C y Retail con personal certificado, evidencia digital e historial de entregas.</p>
+        </div>
+
+        <div class="about-pillar-card">
+          <div class="about-pillar-icon"><i data-lucide="laptop" style="width: 26px; height: 26px;"></i></div>
+          <h4>Logística Virtual Integrada</h4>
+          <p>Diseñamos e implementamos tu infraestructura logística 100% digital, dándote visibilidad y control total de tu operación.</p>
+        </div>
+
+        <div class="about-pillar-card">
+          <div class="about-pillar-icon"><i data-lucide="bike" style="width: 26px; height: 26px;"></i></div>
+          <h4>Entregas Express en Moto</h4>
+          <p>Flotilla de motocicletas para mensajería ultrarrápida, trámite de documentos y paquetería ligera en tiempos récord.</p>
+        </div>
+
+        <div class="about-pillar-card">
+          <div class="about-pillar-icon"><i data-lucide="shield-check" style="width: 26px; height: 26px;"></i></div>
+          <h4>Seguridad Integrada</h4>
+          <p>Unidades blindadas, GPS en tiempo real, antijammers, cámaras y chapas electromagnéticas estándar en cada ruta.</p>
+        </div>
+      </div>
+
+      <div class="about-banner-footer">
+        <div class="about-banner-text">
+          <i data-lucide="check-circle-2" style="width: 28px; height: 28px;"></i>
+          <span>Cuéntanos tu operación y diseñamos la estrategia logística a la medida de tu negocio.</span>
+        </div>
+        <a href="#contacto" class="btn-emerald-light" style="box-shadow: none; padding: 12px 24px;">
+          <i data-lucide="arrow-right" style="width: 18px;"></i> Diseñar Mi Ruta
+        </a>
+      </div>
     </div>
-
-    <div class="about-services-bento grid-7-items">
-      <div class="about-pillar-card">
-        <div class="about-pillar-icon"><i data-lucide="plane" style="width: 26px; height: 26px;"></i></div>
-        <h4>Carga Aérea Estándar</h4>
-        <p>Envíos aéreos consolidados y programados puerta a puerta con tarifas y tiempos optimizados a tu presupuesto.</p>
-      </div>
-
-      <div class="about-pillar-card">
-        <div class="about-pillar-icon"><i data-lucide="zap" style="width: 26px; height: 26px;"></i></div>
-        <h4>Carga Aérea Express</h4>
-        <p>Transporte aéreo de alta prioridad y máxima urgencia con abordaje inmediato y monitoreo de vuelo dedicado.</p>
-      </div>
-
-      <div class="about-pillar-card">
-        <div class="about-pillar-icon"><i data-lucide="map-pin" style="width: 26px; height: 26px;"></i></div>
-        <h4>Última Milla Especializada</h4>
-        <p>Esquemas B2B, B2C y Retail con personal certificado, evidencia digital e historial de entregas.</p>
-      </div>
-
-      <div class="about-pillar-card">
-        <div class="about-pillar-icon"><i data-lucide="laptop" style="width: 26px; height: 26px;"></i></div>
-        <h4>Logística Virtual Integrada</h4>
-        <p>Diseñamos e implementamos tu infraestructura logística 100% digital, dándote visibilidad y control total de tu operación.</p>
-      </div>
-
-      <div class="about-pillar-card">
-        <div class="about-pillar-icon"><i data-lucide="bike" style="width: 26px; height: 26px;"></i></div>
-        <h4>Entregas Express en Moto</h4>
-        <p>Flotilla de motocicletas para mensajería ultrarrápida, trámite de documentos y paquetería ligera en tiempos récord.</p>
-      </div>
-
-      <div class="about-pillar-card">
-        <div class="about-pillar-icon"><i data-lucide="shield-check" style="width: 26px; height: 26px;"></i></div>
-        <h4>Seguridad Integrada</h4>
-        <p>Unidades blindadas, GPS en tiempo real, antijammers, cámaras y chapas electromagnéticas estándar en cada ruta.</p>
-      </div>
-    </div>
-
-    <div class="about-banner-footer">
-      <div class="about-banner-text">
-        <i data-lucide="check-circle-2" style="width: 28px; height: 28px;"></i>
-        <span>Cuéntanos tu operación y diseñamos la estrategia logística a la medida de tu negocio.</span>
-      </div>
-      <a href="#contacto" class="btn-emerald-light" style="box-shadow: none; padding: 12px 24px;">
-        <i data-lucide="arrow-right" style="width: 18px;"></i> Diseñar Mi Ruta
-      </a>
-    </div>
-  </div>
-</section>
+  </section>
 
   <section class="partners-section reveal" id="socios">
     <div class="container">
@@ -751,8 +674,8 @@
       <div class="partner-card"><img src="img/logo_sql_nb.png" alt="Socio Comercial 4"></div>
       <div class="partner-card"><img src="img/Fuller_Cosmetics.png" alt="Socio Comercial 5"></div>
       <div class="partner-card"><img src="img/Liverpool_logo_2023.png" alt="Socio Comercial 6"></div>
-	  <div class="partner-card"><img src="img/Logotipo_del_IMSS.svg.webp" alt="Socio Comercial 7"></div>
-	  <div class="partner-card"><img src="img/Aeromexico-Logo.png" alt="Socio Comercial 8"></div>
+      <div class="partner-card"><img src="img/Logotipo_del_IMSS.svg.webp" alt="Socio Comercial 7"></div>
+      <div class="partner-card"><img src="img/Aeromexico-Logo.png" alt="Socio Comercial 8"></div>
 
       <div class="partner-card"><img src="img/ATT_logo.png" alt="Socio Comercial 1"></div>
       <div class="partner-card"><img src="img/MercadoLibre_esD6IWH.png" alt="Socio Comercial 2"></div>
@@ -760,77 +683,77 @@
       <div class="partner-card"><img src="img/logo_sql_nb.png" alt="Socio Comercial 4"></div>
       <div class="partner-card"><img src="img/Fuller_Cosmetics.png" alt="Socio Comercial 5"></div>
       <div class="partner-card"><img src="img/Liverpool_logo_2023.png" alt="Socio Comercial 6"></div>
-	  <div class="partner-card"><img src="img/Logotipo_del_IMSS.svg.webp" alt="Socio Comercial 7"></div>
-	  <div class="partner-card"><img src="img/Aeromexico-Logo.png" alt="Socio Comercial 8"></div>
+      <div class="partner-card"><img src="img/Logotipo_del_IMSS.svg.webp" alt="Socio Comercial 7"></div>
+      <div class="partner-card"><img src="img/Aeromexico-Logo.png" alt="Socio Comercial 8"></div>
     </div>
   </section>
 
-<section class="mv-section reveal" id="mision-vision">
-  <div class="container">
-    <div class="section-title">
-      <span class="sub-tag">NUESTRO PROPÓSITO</span>
-      <h2>Misión y Visión</h2>
-    </div>
+  <section class="mv-section reveal" id="mision-vision">
+    <div class="container">
+      <div class="section-title">
+        <span class="sub-tag">NUESTRO PROPÓSITO</span>
+        <h2>Misión y Visión</h2>
+      </div>
 
-    <div class="mv-container-grid">
-      <div class="mv-card-interactive">
-        <span class="mv-bg-number">01</span>
-        <div class="mv-card-header">
-          <div class="mv-icon-badge"><i data-lucide="target" style="width: 32px; height: 32px;"></i></div>
-          <div>
-            <span class="mv-badge-label">Compromiso Activo</span>
-            <h3>Misión</h3>
+      <div class="mv-container-grid">
+        <div class="mv-card-interactive">
+          <span class="mv-bg-number">01</span>
+          <div class="mv-card-header">
+            <div class="mv-icon-badge"><i data-lucide="target" style="width: 32px; height: 32px;"></i></div>
+            <div>
+              <span class="mv-badge-label">Compromiso Activo</span>
+              <h3>Misión</h3>
+            </div>
+          </div>
+          <div class="mv-card-body">
+            <p>Lograr en nuestros clientes y socios comerciales una <strong>alianza firme basada en la confianza</strong>, puntualidad y manejo de su producto, garantizando la certeza de cumplir con todos y cada uno de los estándares de calidad hasta su destino final.</p>
           </div>
         </div>
-        <div class="mv-card-body">
-          <p>Lograr en nuestros clientes y socios comerciales una <strong>alianza firme basada en la confianza</strong>, puntualidad y manejo de su producto, garantizando la certeza de cumplir con todos y cada uno de los estándares de calidad hasta su destino final.</p>
-        </div>
-      </div>
 
-      <div class="mv-card-interactive">
-        <span class="mv-bg-number">02</span>
-        <div class="mv-card-header">
-          <div class="mv-icon-badge"><i data-lucide="compass" style="width: 32px; height: 32px;"></i></div>
-          <div>
-            <span class="mv-badge-label">Proyección Futura</span>
-            <h3>Visión</h3>
+        <div class="mv-card-interactive">
+          <span class="mv-bg-number">02</span>
+          <div class="mv-card-header">
+            <div class="mv-icon-badge"><i data-lucide="compass" style="width: 32px; height: 32px;"></i></div>
+            <div>
+              <span class="mv-badge-label">Proyección Futura</span>
+              <h3>Visión</h3>
+            </div>
+          </div>
+          <div class="mv-card-body">
+            <p>Ser una <strong>empresa líder en soluciones logísticas</strong> con presencia en todo el país, brindando servicios con alto profesionalismo, siempre a través de un recurso humano capacitado y motivado que alcance su máximo desarrollo.</p>
           </div>
         </div>
-        <div class="mv-card-body">
-          <p>Ser una <strong>empresa líder en soluciones logísticas</strong> con presencia en todo el país, brindando servicios con alto profesionalismo, siempre a través de un recurso humano capacitado y motivado que alcance su máximo desarrollo.</p>
+
+        <div class="mv-highlights">
+          <div class="mv-pillar-card"><i data-lucide="shield-check"></i><span>Dun & BradStreet</span></div>
+          <div class="mv-pillar-card"><i data-lucide="clock"></i><span>Garantía de Tiempo</span></div>
+          <div class="mv-pillar-card"><i data-lucide="award"></i><span>Certificación INFILTER</span></div>
+          <div class="mv-pillar-card"><i data-lucide="lock"></i><span>Sistema Ópalo</span></div>
         </div>
       </div>
-
-      <div class="mv-highlights">
-        <div class="mv-pillar-card"><i data-lucide="shield-check"></i><span>Dun & BradStreet</span></div>
-        <div class="mv-pillar-card"><i data-lucide="clock"></i><span>Garantía de Tiempo</span></div>
-        <div class="mv-pillar-card"><i data-lucide="award"></i><span>Certificación INFILTER</span></div>
-        <div class="mv-pillar-card"><i data-lucide="lock"></i><span>Sistema Ópalo</span></div>
-      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <section class="video-section reveal" id="video">
     <div class="container">
       <div class="video-container-grid">
-<div class="diagonal-wrapper">
-  <div class="diagonal-pill-container">
-    <img src="img/Caratula.jpg" alt="Caratula" class="video-thumb">
-    <svg class="diagonal-svg-overlay" viewBox="0 0 600 440" preserveAspectRatio="none">
-      <defs>
-        <mask id="pill-mask">
+        <div class="diagonal-wrapper">
+          <div class="diagonal-pill-container">
+            <img src="img/Caratula.jpg" alt="Caratula" class="video-thumb">
+            <svg class="diagonal-svg-overlay" viewBox="0 0 600 440" preserveAspectRatio="none">
+              <defs>
+                <mask id="pill-mask">
                   <rect width="600" height="440" fill="black" />
-                  <rect x="130" y="-80" width="85" height="600" rx="42" fill="white" transform="rotate(35, 172, 220)" />
-                  <rect x="235" y="-80" width="85" height="600" rx="42" fill="white" transform="rotate(35, 277, 220)" />
-                  <rect x="340" y="-80" width="85" height="600" rx="42" fill="white" transform="rotate(35, 382, 220)" />
+                  <rect x="130" y="-80" width="85" height="600" rx="42" fill="" transform="rotate(35, 172, 220)" />
+                  <rect x="235" y="-80" width="85" height="600" rx="42" fill="" transform="rotate(35, 277, 220)" />
+                  <rect x="340" y="-80" width="85" height="600" rx="42" fill="" transform="rotate(35, 382, 220)" />
                 </mask>
               </defs>
-             <rect width="600" height="440" fill="white" mask="url(#pill-mask-inv)" style="mask-composite: exclude;" />
-      <rect x="30" y="-50" width="60" height="500" rx="30" fill="#006837" transform="rotate(35, 60, 200)" />
-      <rect x="445" y="80" width="65" height="450" rx="32" fill="#52B043" transform="rotate(35, 477, 305)" />
-      <rect x="495" y="150" width="65" height="400" rx="32" fill="#006837" transform="rotate(35, 527, 350)" />
-    </svg>
+              <rect width="600" height="440" fill="white" mask="url(#pill-mask)" />
+              <rect x="30" y="-50" width="60" height="500" rx="30" fill="#006837" transform="rotate(35, 60, 200)" />
+              <rect x="445" y="80" width="65" height="450" rx="32" fill="#52B043" transform="rotate(35, 477, 305)" />
+              <rect x="495" y="150" width="65" height="400" rx="32" fill="#006837" transform="rotate(35, 527, 350)" />
+            </svg>
             <div class="play-btn-overlay" id="openVideoBtn">
               <i data-lucide="play" style="width: 36px; height: 36px; fill: currentColor;"></i>
             </div>
@@ -854,31 +777,44 @@
     </div>
   </div>
 
+  <!-- SECCIÓN COBERTURA: MAPA INTERACTIVO INTEGRADO -->
   <section class="map-section reveal" id="cobertura">
     <div class="container">
-      <div class="section-title">
-        <span class="sub-tag">LOGROS Y CAPACIDAD</span>
-        <h2>Dejamos que los números hablen por sí solos</h2>
-      </div>
-
       <div class="main-map-card">
-        <div class="header-title">
-          <div class="header-title-left">
-            <div>
-              <h2>Cobertura Nacional</h2>
-              <span>Presencia operativa estratégica en los <strong>32 estados</strong> de México</span>
-            </div>
+        <div class="header-bar">
+          <div class="brand-title">
+            <h2><i data-lucide="plane" style="color:var(--accent-light)"></i> Cobertura <span class="highlight">35 Destinos</span> <span class="tech-tag">RED AÉREA PIBE</span></h2>
+            <p>Presencia operativa de transporte y logística aérea en la República Mexicana</p>
           </div>
-
-          <div class="map-legend">
-            <div class="legend-item"><span class="legend-dot cobertura"></span><span>Cobertura Operativa</span></div>
-            <div class="legend-item"><span class="legend-dot matriz"></span><span>Nodos & CEDIS</span></div>
+          <div class="filter-pills">
+            <button class="pill-btn active" id="btn-all" onclick="filterZone('all',event)">[00] Todos (35)</button>
+            <button class="pill-btn" onclick="filterZone('norte',event)">[01] Norte</button>
+            <button class="pill-btn" onclick="filterZone('centro',event)">[02] Centro</button>
+            <button class="pill-btn" onclick="filterZone('pacifico',event)">[03] Pacífico / Occidente</button>
+            <button class="pill-btn" onclick="filterZone('sur',event)">[04] Sur / Sureste</button>
           </div>
         </div>
 
-        <div class="map-wrapper" id="map-wrapper">
-          <div id="tooltip"></div>
-          <div id="mexico-map"></div>
+        <div class="content-layout">
+          <div class="map-canvas">
+            <div id="map" class="leaflet-map"></div>
+          </div>
+          <div class="inspector-panel">
+            <div class="inspector-card">
+              <div class="badge-map"><i data-lucide="navigation" style="width:14px"></i> Telemetría de Destino</div>
+              <h3 id="ins-title">Selecciona un Destino</h3>
+              <p id="ins-desc">Pasa el cursor sobre cualquier punto para aislar su vuelo. Al quitar el cursor, todos los puntos reaparecerán de inmediato.</p>
+              <div class="stats-list">
+                <div class="stat-item"><span class="stat-label">Destinos Totales:</span><span class="stat-value" style="color:var(--accent-light)">35 Ciudades</span></div>
+                <div class="stat-item"><span class="stat-label">Estado Operativo:</span><span class="stat-value" id="ins-status" style="color:#10b981">Standby Interactivo</span></div>
+                <div class="stat-item"><span class="stat-label">Modo Aéreo:</span><span class="stat-value" style="color:#94a3b8">Hover Dinámico</span></div>
+              </div>
+            </div>
+            <div class="footer-badge-map">
+              <i data-lucide="plane-takeoff" style="width:24px;color:var(--accent-light);flex-shrink:0"></i>
+              <span>Pasa el cursor sobre un punto para ver su trayectoria. Haz clic para fijarla.</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -899,7 +835,7 @@
         </div>
 
         <div class="service-card">
-          <div class="service-img-container"><img src="img/BARCOS.png" alt="Carga Consolidada"></div>
+          <div class="service-img-container"><img src="img/Barco.png" alt="Carga Consolidada"></div>
           <h3>Carga Consolidada</h3>
           <p>Optimización de costos movilizando mercancía por pallet a nivel nacional con total seguridad.</p>
         </div>
@@ -1049,24 +985,38 @@
           </a>
         </div>
       </div>
-     </div>
+    </div>
     <div class="footer-bottom">
       <div class="container">
         <p>© 2026 PIBE LOGISTIC. Todos los derechos reservados. | <a href="#">Aviso de Privacidad</a></p>
       </div>
     </div>
   </footer>
-
+  
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     lucide.createIcons();
 
+    // Scroll Reveal
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.85) {
+          el.classList.add('active');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    // Responsive Mobile Menu
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.querySelector('.nav-menu');
 
     if (menuToggle && navMenu) {
       menuToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
-        
         const icon = menuToggle.querySelector('i');
         if (navMenu.classList.contains('active')) {
           icon.setAttribute('data-lucide', 'x');
@@ -1250,7 +1200,7 @@
       });
     });
 
-    // Interactive Hover Glow
+    // Interactive Hover Glow Cards
     document.querySelectorAll('.mv-card-interactive').forEach(card => {
       card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
@@ -1261,133 +1211,295 @@
       });
     });
 
-    // D3 Map Responsivo
-const oficinasPorNombre = {
-  "Nuevo León": "Monterrey",
-  "Jalisco": "Guadalajara",
-  "Colima": "Colima",
-  "Michoacán": "Zamora",
-  "Michoacán de Ocampo": "Zamora",
-  "Guanajuato": "León e Irapuato",
-  "Hidalgo": "Pachuca",
-  "México": "Tultitlán (Matriz) y Toluca",
-  "Estado de México": "Tultitlán (Matriz) y Toluca",
-  "Yucatán": "Mérida"
-};
-
-function normalizarTexto(texto) {
-  if (!texto) return "";
-  return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-}
-
-const oficinasNormalizadas = {};
-Object.keys(oficinasPorNombre).forEach(key => {
-  oficinasNormalizadas[normalizarTexto(key)] = oficinasPorNombre[key];
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  const container = d3.select("#mexico-map");
-  const wrapperNode = d3.select("#map-wrapper").node();
-  const tooltip = d3.select("#tooltip");
-
-  const svg = container.append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%");
-
-  const mapGroup = svg.append("g");
-
-  let globalGeoData = null;
-
-  function renderMap() {
-    if (!globalGeoData) return;
-
-    const width = wrapperNode.clientWidth;
-    const height = wrapperNode.clientHeight;
-
-    svg.attr("viewBox", `0 0 ${width} ${height}`);
-
-    const projection = d3.geoMercator().fitSize([width, height], globalGeoData);
-    const path = d3.geoPath().projection(projection);
-
-    const paths = mapGroup.selectAll("path").data(globalGeoData.features);
-
-    paths.enter()
-      .append("path")
-      .merge(paths)
-      .attr("d", path)
-      .attr("class", d => {
-        const name = d.properties.name || d.properties.state_name || "";
-        return oficinasNormalizadas[normalizarTexto(name)] ? "state state-office" : "state state-red";
-      })
-      .on("mousemove", (event, d) => {
-  const name = d.properties.name || d.properties.state_name || "Estado";
-  const oficina = oficinasNormalizadas[normalizarTexto(name)];
-
-  let content = `<strong>${name}</strong>`;
-  if (oficina) {
-    content += `
-      <div class="tooltip-fulfillment-content">
-        <img src="img/Logos.png" alt="PIBE LOGISTIC" class="fulfillment-logo">
-        <span style="font-weight: normal; font-size: 11px;">Nodos & CEDIS: ${oficina}</span>
-      </div>`;
-  } else {
-    content += `<br/><span style="font-weight:normal; font-size:11px;">🚚 Cobertura Operativa</span>`;
-  }
-
-  const rect = wrapperNode.getBoundingClientRect();
-  tooltip.html(content)
-    .style("display", "block")
-    .style("left", (event.clientX - rect.left + 15) + "px")
-    .style("top", (event.clientY - rect.top - 15) + "px");
-})
-      .on("mouseleave", () => tooltip.style("display", "none"));
-
-    paths.exit().remove();
-  }
-
-  const geoJsonData = "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/mexico.geojson";
-  d3.json(geoJsonData).then(data => {
-    globalGeoData = data;
-    renderMap();
-  });
-
-  window.addEventListener('resize', renderMap);
-});
-
-    // Reveal Animation
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
-
-    reveals.forEach(el => observer.observe(el));
-	
-    // Video Modal
-    const videoModal = document.getElementById('videoModal');
+    // Modal Video Handler
     const openVideoBtn = document.getElementById('openVideoBtn');
     const closeVideoBtn = document.getElementById('closeVideoBtn');
+    const videoModal = document.getElementById('videoModal');
     const modalIframe = document.getElementById('modalIframe');
-    const videoURL = "https://www.youtube.com/embed/lq1vd3RABHo?si=9B-SyikP1AVut_en";
 
-    if (openVideoBtn && videoModal && closeVideoBtn && modalIframe) {
+    if (openVideoBtn && videoModal && closeVideoBtn) {
       openVideoBtn.addEventListener('click', () => {
-        modalIframe.src = videoURL;
         videoModal.classList.add('active');
+        if (modalIframe) modalIframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
       });
 
       closeVideoBtn.addEventListener('click', () => {
-        modalIframe.src = "";
         videoModal.classList.remove('active');
+        if (modalIframe) modalIframe.src = "";
       });
 
       videoModal.addEventListener('click', (e) => {
         if (e.target === videoModal) {
-          modalIframe.src = "";
           videoModal.classList.remove('active');
+          if (modalIframe) modalIframe.src = "";
+        }
+      });
+    }
+
+    // ==========================================
+    // SCRIPT DEL MAPA INTERACTIVO (35 DESTINOS)
+    // ==========================================
+    const destinations = [
+      {id:'tijuana',name:'Tijuana',lat:32.5149,lon:-117.0382,region:'norte'},
+      {id:'mexicali',name:'Mexicali',lat:32.6245,lon:-115.4523,region:'norte'},
+      {id:'hermosillo',name:'Hermosillo',lat:29.0729,lon:-110.9559,region:'norte'},
+      {id:'cd_obregon',name:'CD. Obregón',lat:27.4864,lon:-109.9408,region:'norte'},
+      {id:'cd_juarez',name:'CD. Juárez',lat:31.6904,lon:-106.4245,region:'norte'},
+      {id:'chihuahua',name:'Chihuahua',lat:28.6320,lon:-106.0691,region:'norte'},
+      {id:'torreon',name:'Torreón',lat:25.5428,lon:-103.4068,region:'norte'},
+      {id:'reynosa',name:'Reynosa',lat:26.0920,lon:-98.2770,region:'norte'},
+      {id:'monterrey',name:'Monterrey',lat:25.6866,lon:-100.3161,region:'norte'},
+      {id:'durango',name:'Durango',lat:24.0277,lon:-104.6532,region:'norte'},
+      {id:'san_luis_potosi',name:'San Luis Potosí',lat:22.1565,lon:-100.9855,region:'centro'},
+      {id:'tampico',name:'Tampico',lat:22.2331,lon:-97.8611,region:'centro'},
+      {id:'la_paz',name:'La Paz',lat:24.1426,lon:-110.3128,region:'pacifico'},
+      {id:'san_jose_cabo',name:'San José del Cabo',lat:23.0589,lon:-109.6977,region:'pacifico'},
+      {id:'los_mochis',name:'Los Mochis',lat:25.7903,lon:-108.9859,region:'pacifico'},
+      {id:'culiacan',name:'Culiacán',lat:24.8091,lon:-107.3940,region:'pacifico'},
+      {id:'mazatlan',name:'Mazatlán',lat:23.2494,lon:-106.4111,region:'pacifico'},
+      {id:'puerto_vallarta',name:'Puerto Vallarta',lat:20.6534,lon:-105.2253,region:'pacifico'},
+      {id:'guadalajara',name:'Guadalajara',lat:20.6597,lon:-103.3496,region:'pacifico'},
+      {id:'zihuatanejo',name:'Zihuatanejo',lat:17.6439,lon:-101.5517,region:'pacifico'},
+      {id:'aguascalientes',name:'Aguascalientes',lat:21.8853,lon:-102.2916,region:'centro'},
+      {id:'bajio',name:'Bajío',lat:20.9674,lon:-101.2030,region:'centro'},
+      {id:'queretaro',name:'Querétaro',lat:20.5888,lon:-100.3899,region:'centro'},
+      {id:'mexico',name:'México',lat:19.4326,lon:-99.1332,region:'centro'},
+      {id:'puebla',name:'Puebla',lat:19.0414,lon:-98.2063,region:'centro'},
+      {id:'veracruz',name:'Veracruz',lat:19.1738,lon:-96.1342,region:'sur'},
+      {id:'oaxaca',name:'Oaxaca',lat:17.0732,lon:-96.7266,region:'sur'},
+      {id:'minatitlan',name:'Minatitlán',lat:17.9818,lon:-94.5174,region:'sur'},
+      {id:'villahermosa',name:'Villahermosa',lat:17.9895,lon:-92.9475,region:'sur'},
+      {id:'tuxtla_gutierrez',name:'Tuxtla Gutiérrez',lat:16.7516,lon:-93.1029,region:'sur'},
+      {id:'tapachula',name:'Tapachula',lat:14.9080,lon:-92.2636,region:'sur'},
+      {id:'cd_del_carmen',name:'CD. del Carmen',lat:18.6459,lon:-91.8299,region:'sur'},
+      {id:'campeche',name:'Campeche',lat:19.8301,lon:-90.5349,region:'sur'},
+      {id:'merida',name:'Mérida',lat:20.9674,lon:-89.5926,region:'sur'},
+      {id:'cancun',name:'Cancún',lat:21.1619,lon:-86.8515,region:'sur'}
+    ];
+
+    const hub = destinations.find(d => d.id === 'mexico');
+    const map = L.map('map', { zoomControl: true, attributionControl: true }).setView([23.3, -102.5], 5);
+
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 16,
+      attribution: 'Tiles &copy; Esri'
+    }).addTo(map);
+
+    const markerById = {};
+    const routeLineById = {};
+    const planes = [];
+    let isLocked = false;
+    let currentActiveId = null;
+
+    function markerIcon(destId) {
+      const isHub = destId === 'mexico';
+      return L.divIcon({
+        className: 'dest-marker-wrapper',
+        html: `<div class="dest-marker ${isHub ? 'hub' : ''}"></div>`,
+        iconSize: [isHub ? 15 : 12, isHub ? 15 : 12],
+        iconAnchor: [isHub ? 7.5 : 6, isHub ? 7.5 : 6]
+      });
+    }
+
+    function focusRoute(destId) {
+      currentActiveId = destId;
+      planes.forEach(p => {
+        const planeEl = document.getElementById(`plane-${p.id}`);
+        if (planeEl) planeEl.classList.remove('active-flight');
+      });
+      Object.values(routeLineById).forEach(line => {
+        const el = line.getElement();
+        if (el) el.classList.remove('active-route');
+      });
+      destinations.forEach(d => {
+        const marker = markerById[d.id];
+        if (marker) {
+          const markerEl = marker.getElement();
+          const tooltip = marker.getTooltip();
+          const tooltipEl = tooltip ? tooltip.getElement() : null;
+          if (d.id === destId || d.id === 'mexico') {
+            if (markerEl) markerEl.classList.remove('hidden-marker');
+            if (tooltipEl) tooltipEl.classList.remove('hidden-tooltip');
+          } else {
+            if (markerEl) markerEl.classList.add('hidden-marker');
+            if (tooltipEl) tooltipEl.classList.add('hidden-tooltip');
+          }
+        }
+      });
+      const targetPlane = planes.find(p => p.destId === destId);
+      if (targetPlane) {
+        const planeEl = document.getElementById(`plane-${targetPlane.id}`);
+        if (planeEl) planeEl.classList.add('active-flight');
+      }
+      if (routeLineById[destId]) {
+        const lineEl = routeLineById[destId].getElement();
+        if (lineEl) lineEl.classList.add('active-route');
+      }
+    }
+
+    function resetView(force = false) {
+      if (isLocked && !force) return;
+      isLocked = false;
+      currentActiveId = null;
+      destinations.forEach(d => {
+        const marker = markerById[d.id];
+        if (marker) {
+          const markerEl = marker.getElement();
+          const tooltip = marker.getTooltip();
+          const tooltipEl = tooltip ? tooltip.getElement() : null;
+          if (markerEl) markerEl.classList.remove('hidden-marker');
+          if (tooltipEl) tooltipEl.classList.remove('hidden-tooltip');
+        }
+      });
+      planes.forEach(p => {
+        const planeEl = document.getElementById(`plane-${p.id}`);
+        if (planeEl) planeEl.classList.remove('active-flight');
+      });
+      Object.values(routeLineById).forEach(line => {
+        const el = line.getElement();
+        if (el) el.classList.remove('active-route');
+      });
+      document.getElementById('ins-title').innerText = 'Selecciona un Destino';
+      document.getElementById('ins-desc').innerText = 'Pasa el cursor sobre cualquier punto para aislar su vuelo. Al quitar el cursor, todos los puntos reaparecerán de inmediato.';
+      document.getElementById('ins-status').innerText = 'Standby Interactivo';
+    }
+
+    function selectDestination(dest, locked = true) {
+      if (locked) isLocked = true;
+      focusRoute(dest.id);
+      document.getElementById('ins-title').innerText = dest.name;
+      document.getElementById('ins-desc').innerText = `Conexión aérea directa activa desde el HUB CDMX hacia ${dest.name}. Monitoreo de ruta y tiempos de tránsito prioritarios.`;
+      document.getElementById('ins-status').innerText = `Ruta Fijada: CDMX - ${dest.name.toUpperCase()}`;
+    }
+
+    function createCurvedPath(start, end) {
+      const lat1 = start.lat, lon1 = start.lon;
+      const lat2 = end.lat, lon2 = end.lon;
+      const midLat = (lat1 + lat2) / 2;
+      const midLon = (lon1 + lon2) / 2;
+      const dLat = lat2 - lat1, dLon = lon2 - lon1;
+      const offset = 0.15;
+      const controlLat = midLat - dLon * offset;
+      const controlLon = midLon + dLat * offset;
+
+      const points = [];
+      const steps = 60;
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const lat = (1 - t) * (1 - t) * lat1 + 2 * (1 - t) * t * controlLat + t * t * lat2;
+        const lon = (1 - t) * (1 - t) * lon1 + 2 * (1 - t) * t * controlLon + t * t * lon2;
+        points.push([lat, lon]);
+      }
+      return points;
+    }
+
+    destinations.forEach(d => {
+      const marker = L.marker([d.lat, d.lon], { icon: markerIcon(d.id) }).addTo(map);
+      marker.bindTooltip(d.name, { permanent: true, direction: 'top', offset: [0, -8], className: 'city-tooltip' });
+      
+      marker.on('mouseover', () => {
+        if (!isLocked) {
+          selectDestination(d, false);
+        }
+      });
+      marker.on('mouseout', () => {
+        if (!isLocked) resetView(false);
+      });
+      marker.on('click', (e) => {
+        L.DomEvent.stopPropagation(e);
+        selectDestination(d, true);
+      });
+
+      markerById[d.id] = marker;
+
+      if (d.id !== 'mexico') {
+        const pathPoints = createCurvedPath(hub, d);
+        const routeLine = L.polyline(pathPoints, { className: 'route-line' }).addTo(map);
+        routeLineById[d.id] = routeLine;
+
+        const planeIcon = L.divIcon({
+          className: 'plane-marker',
+          html: `<div class="plane-container" id="plane-${d.id}">
+                  <svg class="plane-svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                  </svg>
+                 </div>`,
+          iconSize: [22, 22],
+          iconAnchor: [11, 11]
+        });
+
+        const planeMarker = L.marker(pathPoints[0], { icon: planeIcon, zIndexOffset: 1000 }).addTo(map);
+        
+        planes.push({
+          id: d.id,
+          destId: d.id,
+          marker: planeMarker,
+          path: pathPoints,
+          progress: Math.random(),
+          speed: 0.003 + Math.random() * 0.002
+        });
+      }
+    });
+
+    map.on('click', () => {
+      resetView(true);
+    });
+
+    function animatePlanes() {
+      planes.forEach(p => {
+        p.progress += p.speed;
+        if (p.progress > 1) p.progress = 0;
+
+        const totalIndex = (p.path.length - 1) * p.progress;
+        const index = Math.floor(totalIndex);
+        const nextIndex = Math.min(index + 1, p.path.length - 1);
+        const subProgress = totalIndex - index;
+
+        const currentPt = p.path[index];
+        const nextPt = p.path[nextIndex];
+
+        const lat = currentPt[0] + (nextPt[0] - currentPt[0]) * subProgress;
+        const lon = currentPt[1] + (nextPt[1] - currentPt[1]) * subProgress;
+
+        p.marker.setLatLng([lat, lon]);
+
+        const y = nextPt[0] - currentPt[0];
+        const x = nextPt[1] - currentPt[1];
+        let angle = Math.atan2(y, x) * (180 / Math.PI);
+        let heading = 90 - angle;
+
+        const planeEl = document.getElementById(`plane-${p.id}`);
+        if (planeEl) {
+          planeEl.style.transform = `rotate(${heading}deg)`;
+        }
+      });
+      requestAnimationFrame(animatePlanes);
+    }
+
+    animatePlanes();
+
+    function filterZone(region, event) {
+      if (event) event.stopPropagation();
+      document.querySelectorAll('.filter-pills .pill-btn').forEach(btn => btn.classList.remove('active'));
+      if (event && event.target) {
+        event.target.classList.add('active');
+      }
+
+      resetView(true);
+
+      destinations.forEach(d => {
+        const marker = markerById[d.id];
+        if (marker) {
+          const markerEl = marker.getElement();
+          const tooltip = marker.getTooltip();
+          const tooltipEl = tooltip ? tooltip.getElement() : null;
+          if (region === 'all' || d.region === region || d.id === 'mexico') {
+            if (markerEl) markerEl.classList.remove('hidden-marker');
+            if (tooltipEl) tooltipEl.classList.remove('hidden-tooltip');
+          } else {
+            if (markerEl) markerEl.classList.add('hidden-marker');
+            if (tooltipEl) tooltipEl.classList.add('hidden-tooltip');
+          }
         }
       });
     }
