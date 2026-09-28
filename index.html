@@ -345,6 +345,29 @@
     .leaflet-tooltip.city-tooltip { background: transparent; border: 0; box-shadow: none; padding: 0; color: #fff; font: 600 10px 'Plus Jakarta Sans', sans-serif; text-shadow: 0 1px 4px #000, 0 0 3px #000; pointer-events: none; transition: opacity .25s ease; }
     .leaflet-tooltip.city-tooltip.hidden-tooltip { opacity: 0!important; }
     .leaflet-tooltip.city-tooltip:before { display: none; }
+	
+	/* Contenedor del logo dentro del mapa Leaflet */
+.leaflet-map-logo-control {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    padding: 8px 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    margin: 15px !important; /* Separación del borde del mapa */
+}
+
+.leaflet-map-logo-control img {
+    height: 40px; /* Ajusta la altura de tu logo según tus necesidades */
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
 
     /* Servicios */
     .services-section { padding: 100px 0; background: #0d1410 !important; background-image: radial-gradient(circle at 50% 30%, #1a2921 0%, #0d1410 100%) !important; position: relative; overflow: hidden; color: #ffffff !important; }
@@ -1501,6 +1524,20 @@
         }
       });
     }
+	
+	// Agregar Logo dentro del Mapa
+const logoControl = L.control({ position: 'bottomleft' }); // Opciones: 'topleft', 'topright', 'bottomleft', 'bottomright'
+
+logoControl.onAdd = function(map) {
+    const div = L.DomUtil.create('div', 'leaflet-map-logo-control');
+    
+    // Reemplaza 'ruta/de/tu-logo.png' con la URL o ruta local de tu imagen de logo
+    div.innerHTML = `<img src="img/Logos.png" alt="PIBE Logistic Logo">`;
+    
+    return div;
+};
+
+logoControl.addTo(map);
   </script>
 </body>
 </html>
