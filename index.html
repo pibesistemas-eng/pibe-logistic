@@ -346,27 +346,24 @@
     .leaflet-tooltip.city-tooltip.hidden-tooltip { opacity: 0!important; }
     .leaflet-tooltip.city-tooltip:before { display: none; }
 	
-	/* Contenedor del logo dentro del mapa Leaflet */
-.leaflet-map-logo-control {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 10px;
-    padding: 8px 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: auto;
-    margin: 15px !important; /* Separación del borde del mapa */
+	/* Logo con resplandor neón en el título de Cobertura */
+.header-logo-neon {
+  height: 32px; /* Ajusta la altura del logo según tus preferencias */
+  width: auto;
+  object-fit: contain;
+  vertical-align: middle;
+  /* Brillo e iluminación neón utilizando los colores corporativos */
+  filter: drop-shadow(0 0 4px #10b981) drop-shadow(0 0 10px #34d399) brightness(1.2);
+  animation: titleNeonPulse 2s infinite alternate;
 }
 
-.leaflet-map-logo-control img {
-    height: 40px; /* Ajusta la altura de tu logo según tus necesidades */
-    width: auto;
-    display: block;
-    object-fit: contain;
+@keyframes titleNeonPulse {
+  0% {
+    filter: drop-shadow(0 0 3px #10b981) drop-shadow(0 0 8px #34d399) brightness(1.1);
+  }
+  100% {
+    filter: drop-shadow(0 0 7px #10b981) drop-shadow(0 0 15px #34d399) brightness(1.35);
+  }
 }
 
     /* Servicios */
@@ -681,7 +678,7 @@
           <span>Cuéntanos tu operación y diseñamos la estrategia logística a la medida de tu negocio.</span>
         </div>
         <a href="#contacto" class="btn-emerald-light" style="box-shadow: none; padding: 12px 24px;">
-          <i data-lucide="arrow-right" style="width: 18px;"></i> Diseñar Mi Ruta
+          <i data-lucide="arrow-right" style="width: 18px;"></i> Crea tu Ruta
         </a>
       </div>
     </div>
@@ -810,8 +807,7 @@
       <div class="main-map-card">
         <div class="header-bar">
           <div class="brand-title">
-            <h2><i data-lucide="plane" style="color:var(--accent-light)"></i> Cobertura <span class="highlight">35 Destinos</span> <span class="tech-tag">RED AÉREA PIBE</span></h2>
-            <p>Presencia operativa de transporte y logística aérea en la República Mexicana</p>
+            <h2><img src="img/Logos.png" class="header-logo-neon" alt="Logo PIBE"></i> Cobertura en <span class="highlight">35 Destinos</span> </h2>
           </div>
           <div class="filter-pills">
             <button class="pill-btn active" id="btn-all" onclick="filterZone('all',event)">[00] Todos (35)</button>
@@ -1247,7 +1243,7 @@
     if (openVideoBtn && videoModal && closeVideoBtn) {
       openVideoBtn.addEventListener('click', () => {
         videoModal.classList.add('active');
-        if (modalIframe) modalIframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
+        if (modalIframe) modalIframe.src = "https://youtu.be/lq1vd3RABHo?si=Vy0zkXiZUs7NnXNf";
       });
 
       closeVideoBtn.addEventListener('click', () => {
@@ -1524,20 +1520,6 @@
         }
       });
     }
-	
-	// Agregar Logo dentro del Mapa
-const logoControl = L.control({ position: 'bottomleft' }); // Opciones: 'topleft', 'topright', 'bottomleft', 'bottomright'
-
-logoControl.onAdd = function(map) {
-    const div = L.DomUtil.create('div', 'leaflet-map-logo-control');
-    
-    // Reemplaza 'ruta/de/tu-logo.png' con la URL o ruta local de tu imagen de logo
-    div.innerHTML = `<img src="img/Logos.png" alt="PIBE Logistic Logo">`;
-    
-    return div;
-};
-
-logoControl.addTo(map);
   </script>
 </body>
 </html>
